@@ -1,0 +1,14 @@
+---
+title: "DataCleaning"
+output: html_document
+date: "2024-11-19"
+---
+
+```{r}
+library(readr)
+
+# Load the data (assuming a semi-colon delimiter)
+data <- read_delim("student-por.csv", delim = ";", col_names = TRUE)
+data
+```
+
