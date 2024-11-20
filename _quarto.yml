@@ -6,12 +6,8 @@ execute:
   echo: true
 
 book:
-  title: "YOUR PROJECT TITLE"
   title: "Student Performance"
   author:
-    - Yueer Liu(UNI1)
-    - Ziying Song (UNI2)
-  repo-url: https://github.com/YOUR_GITHUB_ACCOUNT/REPO_NAME
     - Yueer Liu(yl5766)
     - Ziying Song (zs2698)
   repo-url: https://ssong423.github.io/studentPerformance/
