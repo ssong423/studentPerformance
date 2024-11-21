@@ -25,7 +25,7 @@ We check missing values using:
 A missing values heatmap that shows the distribution of missing data across columns.
 
 ```{r}
-library(tidyverse)
+suppressPackageStartupMessages(library(tidyverse))
 library(ggplot2)
 library(naniar)
 
@@ -35,13 +35,10 @@ missing_values <- data %>%
 
 print(missing_values)
 
-
 vis_miss(data) +
   theme_minimal() + 
   labs(title = "Missing Data Heatmap (Rows and Columns)") +
-    scale_fill_manual(values = c("gray90", "steelblue")) +
-    theme(axis.text.x = element_text(angle = 45, hjust = 0))
-
+  theme(axis.text.x = element_text(angle = 45, hjust = 0))
 
 ```
 The dataset is complete with no missing values, which simplifies preprocessing. However, we will monitor data consistency and outliers in subsequent analyses.
