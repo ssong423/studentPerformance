@@ -1,9 +1,8 @@
 # Data
-```{r}
+```{r }
 library(readr)
 
-data <- read_delim("student-por.csv", delim = ";", col_names = TRUE)
-data
+data <- read_delim("student-por.csv", delim = ";", col_names = TRUE, show_col_types = FALSE)
 ```
 
 ## Description
