@@ -176,14 +176,6 @@ ggplot(data_famrel, aes(x = G3, y = famrel, fill = famrel)) +
 
 Family relationship quality has a clear influence on students' academic performance. Students with "Very Good" relationships tend to cluster around higher grades, while those with "Very Poor" relationships exhibit flatter distributions, with a noticeable shift toward lower grades. As the quality of family relationships improves, grades become more concentrated at the upper end, indicating both better performance and consistency. However, students with "Average" relationships display a wider spread of grades, suggesting a mixture of influencing factors beyond family relationships alone.
 
-选一个
-
-Family relationship quality clearly influences students' academic performance, with stronger relationships correlating with better outcomes. Students with "Very Good" family relationships cluster around higher grades (closer to 20) and exhibit tighter distributions, indicating both better performance and greater consistency. Conversely, those with "Very Poor" or "Poor" relationships show broader distributions and lower grades (closer to 0-10), likely reflecting external challenges or instability affecting their academic success.
-
-Students with "Average" or "Good" family relationships fall into a transitional zone, displaying more balanced grade distributions with peaks around the middle grades (10-15). While these groups perform better than students with poorer relationships, they do not reach the consistency or high performance seen in the "Very Good" category.
-
-Despite these trends, some overlap exists in the middle-grade range (10-15), indicating that family relationship quality is not the sole determinant of academic performance. Other factors likely contribute to this variability, suggesting the need for further analysis to fully understand the drivers of academic success.
-
 ------------------------------------------------------------------------
 
 ### **3. Guardianship and Grade Distribution**
@@ -469,18 +461,7 @@ ggparcoord(
 
 This parallel coordinate plot highlights group-level differences based on the reason for school choice. The reputation group consistently performs better academically (higher grades in G1, G2, G3) and has higher parental education levels (Medu, Fedu), suggesting a stronger academic focus and support system. In contrast, the other group tends to underperform in grades, indicating potential challenges or differing motivations. Behavioral variables like Dalc (weekday alcohol consumption) and Walc (weekend alcohol consumption) show little variation across groups, while the home group demonstrates slightly better health and lower absences, possibly due to proximity benefits. These patterns suggest a need for tailored support for underperforming groups like other.
 
-#### Commentary
-
-The **reputation** group shows the highest academic performance (G1, G2, G3) and parental education levels (Medu, Fedu). These students also exhibit lower levels of absences and healthier behaviors (e.g., lower alcohol consumption). This group demonstrates a consistent pattern of high achievement and supportive family environments.
-
-The **home** group exhibits moderate grades and relatively good health, aligning with low travel time and absenteeism. This suggests that proximity to school might positively influence both attendance and academic performance.
-
-Students in the **other** group show the lowest grades and higher variability across most variables, such as absenteeism and alcohol consumption. This group's behavior and performance patterns indicate potential external challenges or lack of motivation.
-
-Finally, the **course** group displays moderate performance, with notable variation in study time and health metrics, suggesting a balanced but less focused academic profile compared to the reputation group.
-
-
-#### Insights
+**Insights**
 
 -   **High grades** are strongly associated with the reputation group, likely due to parental education and structured family environments.
 -   **Attendance** (absences and travel time) significantly affects grades, with lower absenteeism linked to better performance.
@@ -536,16 +517,7 @@ ggplot(aggregated_data, aes(x = PC1, y = PC2, color = G3_group)) +
 
 This PCA biplot effectively illustrates the relationships between variables and their influence on distinguishing G3 grade groups (Low, Medium, High). Key variables like studytime, Medu, and Fedu align with higher grades, while failures and age are associated with lower grades. The directions and proximities of arrows reveal correlations among variables, such as Walc and Dalc. The separation of G3 groups along PC1 highlights how these variables differentiate grade performance, making the plot a valuable tool for understanding underlying patterns.
 
-
-#### Commentary
-
-The first principal component (PC1) separates students primarily based on academic variables like **study time**, **Medu**, and **Fedu**. The **High** G3 group aligns closely with these variables, indicating their strong positive impact on academic performance.
-
-The second principal component (PC2) highlights behavioral variables such as **alcohol consumption (Dalc, Walc)** and **failures**, which are negatively correlated with grades. The **Low** G3 group clusters near these variables, reflecting their detrimental effects on academic success.
-
-Key variables like **health**, **famrel**, and **absences** contribute to grade variability but are more neutral, aligning with the **Medium** G3 group. These variables highlight the balancing factors influencing moderate performance levels.
-
-#### Insights
+**Insights**
 
 -   **Parental education (Medu, Fedu)** and **study time** are the strongest predictors of high grades.
 -   Negative behavioral patterns, such as **failures** and **alcohol consumption**, are key indicators of low performance.
@@ -558,117 +530,3 @@ Key variables like **health**, **famrel**, and **absences** contribute to grade 
 The multivariate analysis underscores the importance of both contextual and behavioral variables in determining academic success. High-performing students benefit from supportive family environments, structured study routines, and positive health behaviors. In contrast, low-performing students are often associated with negative behaviors like alcohol consumption and higher failure rates.
 
 These findings suggest targeted interventions focusing on improving behavioral habits and addressing absenteeism could significantly benefit medium- and low-performing students. Additionally, leveraging parental involvement and structured family support systems could further enhance overall academic outcomes.
-
-```{r, fig.width=16, fig.height=12}
-library(vcd)
-library(dplyr)
-library(forcats)
-library(RColorBrewer)
-
-data$G3_group <- case_when(
-  data$G3 >= 15 ~ "High",
-  data$G3 >= 10 ~ "Medium",
-  TRUE ~ "Low"
-)
-data$G3_group <- as.factor(data$G3_group)
-
-palette <- brewer.pal(n = length(levels(data$G3_group)), name = "Set3")
-
-vcd::mosaic(G3_group ~ famsup + higher + schoolsup, 
-            data, 
-            direction = c("v", "v", "v", "h"),
-            highlighting_fill = palette,
-            main = "Mosaic Plot of G3 Grade Group by Family Support and Higher Education"
-            )
-```
-
-```{r}
-# 加载所需的包
-library(ggplot2)
-
-# 绘制散点图
-ggplot(data, aes(x = absences, y = G3, color = studytime)) +
-  geom_point(alpha = 0.7, size = 3) +  # 添加散点
-  facet_wrap(~ famrel, labeller = labeller(famrel = c(
-    "1" = "Very Poor",
-    "2" = "Poor",
-    "3" = "Average",
-    "4" = "Good",
-    "5" = "Very Good"
-  ))) +  # 按家庭关系分面并设置标签
-  #scale_color_gradient(low = "blue", high = "red") +  # 学习时间的颜色渐变
-  theme_minimal(base_size = 14) +
-  labs(
-    title = "Absences vs Final Grades by Family Relationship",
-    x = "Absences",
-    y = "Final Grades (G3)",
-    color = "Study Time (hours)"
-  )
-
-```
-
-```{r}
-ggplot(data, aes(x = studytime, y = G3, color = higher)) +
-  geom_point(alpha = 0.7, size = 2) +
-  scale_color_manual(values = c("yes" = "darkgreen", "no" = "purple"), name = "Higher Education") +
-  theme_minimal(base_size = 14) +
-  labs(
-    title = "Study Time vs Final Grades by Higher Education Aspiration",
-    x = "Study Time (hours/day)",
-    y = "Final Grades (G3)",
-    color = "Aspiration"
-  )
-
-```
-
-```{r}
-ggplot(data, aes(x = activities, fill = romantic)) +
-  geom_bar(position = "dodge", aes(fill = romantic)) +
-  facet_wrap(~ higher) +  # 按 higher 分面
-  scale_fill_manual(values = c("yes" = "pink", "no" = "blue"), name = "Romantic Relationship") +
-  theme_minimal(base_size = 14) +
-  labs(
-    title = "Extracurricular Activities and Romantic Relationship by Higher Education Aspiration",
-    x = "Participation in Activities",
-    y = "Count",
-    fill = "Romantic"
-  )
-
-```
-
-```{r}
-library(ggmosaic)
-
-ggplot(data) +
-  geom_mosaic(aes(weight = 1, x = product(higher, romantic), fill = activities)) +
-  #scale_fill_manual(name = "Activities") +
-  theme_minimal(base_size = 14) +
-  labs(
-    title = "Higher Education Aspiration with Activities and Romantic Relationship",
-    x = "Higher Education Aspiration and Romantic Relationship",
-    y = "Proportion",
-    fill = "Participation in Activities"
-  )
-
-```
-
-```{r}
-ggplot(data, aes(x = G3)) +
-  geom_histogram(aes(y = ..density..), binwidth = 1, fill = "skyblue", color = "black", alpha = 0.7) +
-  geom_density(color = "red", size = 1) +
-  facet_wrap(~ health, labeller = labeller(health = c(
-    "1" = "Very Poor",
-    "2" = "Poor",
-    "3" = "Average",
-    "4" = "Good",
-    "5" = "Very Good"
-  ))) +
-  theme_minimal(base_size = 14) +
-  labs(
-    title = "Distribution of Final Grades (G3) by Health Status",
-    x = "Final Grades (G3)",
-    y = "Density",
-    subtitle = "Faceted by Health Status"
-  )
-
-```
