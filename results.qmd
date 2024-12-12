@@ -1,5 +1,4 @@
 # Results
-<<<<<<< HEAD
 
 Understanding the progression of student performance across different stages is crucial for identifying trends and patterns. This section focuses on the three academic stages:
 
@@ -189,115 +188,6 @@ Despite these trends, some overlap exists in the middle-grade range (10-15), ind
 
 ### **3. Guardianship and Grade Distribution**
 
-=======
-```{r}
-library(GGally)
-library(dplyr)
-library(readr)
-
-
-data <- read_delim("student-por.csv", delim = ";", col_names = TRUE, show_col_types = FALSE)
-
-
-numeric_columns <- sapply(data, is.numeric)
-
-data[, c(3, 7, 8, 13, 14, 15, 24:33)] <- scale(data[, c(3, 7, 8, 13, 14, 15, 24:33)])
-
-summarized_data <- data %>%
-  group_by(reason) %>%
-  summarize(across(where(is.numeric), mean))
-
-# Ensure categorical variables are factors
-data$reason <- as.factor(data$reason)
-
-ggparcoord(
-    data = data,
-    columns = c(3, 7, 8, 13, 14, 15, 24:33),  
-    groupColumn = "reason",                 
-    scale = "globalminmax",                  
-    title = "Parallel Coordinate Plot for Student Data"
-) +
-theme_minimal()
-
-```
-
-
-
-```{r}
-
-library(GGally)
-library(dplyr)
-library(readr)
-
-
-data <- read_delim("student-por.csv", delim = ";", col_names = TRUE, show_col_types = FALSE)
-# scale the data or not
-#data[, c(3, 7, 8, 13, 14, 15, 24:33)] <- scale(data[, c(3, 7, 8, 13, 14, 15, 24:33)])
-
-summarized_data <- data %>%
-    group_by(reason) %>%
-    summarize(across(where(is.numeric), mean))
-
-ggparcoord(
-    data = summarized_data,
-    columns = 2:ncol(summarized_data),  
-    groupColumn = 1,                   
-    scale = "globalminmax",
-    alphaLines = 0.5
-) +
-    theme_minimal() +
-    theme(
-        axis.text.x = element_text(angle = 45, hjust = 1), 
-        plot.margin = margin(10, 20, 10, 20)               
-    )
-```
-This parallel coordinate plot highlights group-level differences based on the reason for school choice. The reputation group consistently performs better academically (higher grades in G1, G2, G3) and has higher parental education levels (Medu, Fedu), suggesting a stronger academic focus and support system. In contrast, the other group tends to underperform in grades, indicating potential challenges or differing motivations. Behavioral variables like Dalc (weekday alcohol consumption) and Walc (weekend alcohol consumption) show little variation across groups, while the home group demonstrates slightly better health and lower absences, possibly due to proximity benefits. These patterns suggest a need for tailored support for underperforming groups like other.
-
-
-```{r, fig.width=14, fig.height=14}
-library(vcd)
-
-# Subset your categorical columns
-categorical_data <- data[, c(2, 16:23)]
-
-# Ensure all categorical columns are factors
-categorical_data[] <- lapply(categorical_data, as.factor)
-
-# Create a contingency table
-data_table <- table(categorical_data)
-
-par(cex = 0.1, mar = c(5, 5, 5, 5))  # Adjust text scaling and margins
-
-# Create a mosaic pairs plot
-pairs(data_table, highlighting = 2)
-```
-This mosaic plot highlights the distribution and relationships among categorical variables, showing dominant categories such as more females (F), prevalent yes responses for variables like higher, internet, and romantic, and notable imbalances in categories like schoolsup and famsup. Pairwise associations, such as students with nursery = yes often having higher = yes, provide insights into potential dependencies. 
-
-
-```{r, fig.width=16, fig.height=12}
-library(vcd)
-library(dplyr)
-library(forcats)
-library(RColorBrewer)
-
-data$G3_group <- case_when(
-  data$G3 >= 15 ~ "High",
-  data$G3 >= 10 ~ "Medium",
-  TRUE ~ "Low"
-)
-data$G3_group <- as.factor(data$G3_group)
-
-palette <- brewer.pal(n = length(levels(data$G3_group)), name = "Set3")
-
-vcd::mosaic(G3_group ~ famsup + higher + schoolsup, 
-            data, 
-            direction = c("v", "v", "v", "h"),
-            highlighting_fill = palette,
-            main = "Mosaic Plot of G3 Grade Group by Family Support and Higher Education"
-            )
-```
-
->>>>>>> 8933e5d65f5160f7a035ba0b3e9ea342775c14a1
 ```{r}
 library(ggplot2)
 library(tidyr)
@@ -317,13 +207,8 @@ ggplot(data_long, aes(x = GradeValue, fill = GradeType, color = GradeType)) +
     x = "Grade Value",
     y = "Density"
   ) +
-<<<<<<< HEAD
   scale_fill_manual(values = c("steelblue", "lightcoral", "darkseagreen")) + # Adjust fill colors
   scale_color_manual(values = c("steelblue", "lightcoral", "darkseagreen")) + # Adjust line colors
-=======
-  scale_fill_manual(values = c("steelblue", "pink", "darkseagreen")) + # Adjust fill colors
-  scale_color_manual(values = c("steelblue", "pink", "darkseagreen")) + # Adjust line colors
->>>>>>> 8933e5d65f5160f7a035ba0b3e9ea342775c14a1
   theme_minimal() +
   theme(
     legend.title = element_text(size = 12),
@@ -332,7 +217,6 @@ ggplot(data_long, aes(x = GradeValue, fill = GradeType, color = GradeType)) +
   )
 
 ```
-<<<<<<< HEAD
 
 The type of guardian influences students' academic performance, particularly their final grades (G3). Students under "mother" or "father" guardianship tend to have tightly clustered grade distributions, with peaks in the middle-to-high range, reflecting consistent support. In contrast, students under "other" guardianship show broader distributions, indicating greater variability and potentially less stable academic guidance.
 
@@ -440,7 +324,7 @@ Understanding the broader context of students' academic performance requires ana
 
 ### 1. Impact of Support Types on G3 Classification
 
-This mosaic plot investigates the combined impact of **family support (famsup)**, **school support (schoolsup)**, and **aspirations for higher education (higher)** on students' G3 grade group classifications: High, Medium, and Low.
+This mosaic pairs plot provides a comprehensive overview of the relationships among categorical variables such as gender, support systems, extracurricular activities, and educational aspirations. By visualizing pairwise associations, the plot highlights patterns and potential dependencies between these factors, offering insights into how various support and demographic elements interact within the student population.
 
 ```{r, fig.width=14, fig.height=14}
 library(vcd)
@@ -461,21 +345,31 @@ pairs(data_table, highlighting = 2,
       main = "Mosaic Pairs Plot: Categorical Variables Relationships")
 ```
 
-**Higher Education Aspirations**\
-Students who aspire to higher education are significantly more likely to achieve "High" or "Medium" grades, with a substantial reduction in "Low" grades compared to those without such aspirations. This trend persists across various combinations of family and school support, suggesting that aspirations for higher education play a critical role in driving academic performance.
+1.  **Gender Distribution and Support Systems**:
 
-**Support Systems**
+    -   Female students outnumber male students, as evident from the gender distribution.
 
--   **Family Support**: Students receiving family support exhibit a slight increase in "Medium" grades but do not show a notable improvement in achieving "High" grades compared to those without family support.
+    -   School and family support (schoolsup and famsup) exhibit slight imbalances, with "no" responses being more common for family support, while school support has a greater proportion of "yes" responses.
 
--   **School Support**: The impact of school support is more pronounced, leading to a noticeable reduction in "Low" grades and a corresponding increase in "Medium" and "High" grades. This suggests that school-provided resources or guidance may help mitigate challenges faced by struggling students.
+2.  **Higher Education Aspirations**:
 
-**Combined Effects**\
-The combination of aspirations for higher education with either family or school support results in the most favorable outcomes. Students in this group achieve a higher proportion of "High" grades compared to others. In contrast, those lacking both aspirations and support are disproportionately represented in the "Low" grade category, indicating the compounded negative impact of limited support and motivation.
+    A large proportion of students aspire to pursue higher education (higher = yes). This group shows strong overlap with students who have received school and family support, suggesting a possible link between support systems and long-term educational goals.
 
-#### **Implications**:
+3.  **Extracurricular Activities**:
 
-These observations highlight the importance of fostering aspirations for higher education and providing robust support systems, particularly within schools. While family support has a moderate influence, school support appears more impactful in reducing the likelihood of poor academic outcomes. Interventions should focus on enhancing school support mechanisms and encouraging higher education aspirations to improve overall student performance, especially for those at risk of falling into the "Low" grade category.
+    Participation in extracurricular activities (activities = yes) is positively associated with both higher education aspirations and family support. Students involved in activities often have a broader support network, reinforcing the importance of engagement beyond academics.
+
+4.  **Nursery Attendance and Aspirations**:
+
+    Students who attended nursery school (nursery = yes) are more likely to aspire to higher education, indicating a potential long-term benefit of early educational exposure.
+
+5.  **Other Variables and Patterns**:
+
+    Internet access (internet = yes) and being in a romantic relationship (romantic = yes) are relatively evenly distributed across categories, showing no strong associations with support systems or higher education aspirations.
+
+### Interpretation:
+
+This plot underscores the interplay of support systems, aspirations, and other categorical factors in shaping students' educational experiences. The strong connection between higher education aspirations and support—both familial and institutional—highlights the importance of fostering a supportive environment. Additionally, early education (e.g., nursery attendance) and extracurricular activities appear to have long-term positive influences on students' goals and engagement. These insights can inform strategies to better support students in achieving their academic and personal objectives.
 
 ### **2. Mosaic Pairs Plot**
 
@@ -516,31 +410,15 @@ vcd::mosaic(G3_group ~ famsup + higher + schoolsup,
 
 ```
 
-1.  **Gender Distribution**:
+Students with aspirations for higher education consistently achieve better academic outcomes. A significant proportion of these students fall into the "High" and "Medium" G3 grade categories, while the "Low" category is markedly reduced compared to students without such aspirations. This underscores the motivational role of higher education goals in driving academic success.
 
-    -   There is a higher proportion of female students compared to males.
+The presence of family and school support also plays a critical role. School support is particularly effective in reducing the proportion of "Low" grades while boosting "Medium" and "High" outcomes, especially for students with aspirations for higher education. Family support, while slightly less impactful than school support in this context, still contributes positively to better grades.
 
-    -   Gender does not appear to significantly influence other variables like school or family support.
+When support systems are combined, the best outcomes are observed. Students with both family and school support, coupled with aspirations for higher education, show the highest proportion of "High" grades. Conversely, students without any support systems or aspirations are more likely to be concentrated in the "Low" grade category, highlighting the compounding disadvantage of lacking these key factors.
 
-2.  **Support Relationships**:
+This visualization underscores the importance of aspirations and support systems—both familial and institutional—in shaping academic performance. It highlights the need for targeted interventions to ensure students without support or aspirations are not left behind.
 
-    -   Students with aspirations for higher education are more likely to have family and school support.
-
-    -   Interestingly, students without family support still show some inclination towards school support, indicating the importance of school intervention in such cases.
-
-3.  **Activity and Support**:
-
-    -   Participation in extracurricular activities (activities = yes) is positively associated with both aspirations for higher education and family support. This suggests a broader support network for students actively engaged in school activities.
-
-4.  **Nursery Attendance and Higher Education**:
-
-    -   A significant proportion of students who attended nursery school also aspire to higher education. This could indicate a link between early education and long-term academic aspirations.
-
-#### **Implications**:
-
-This analysis highlights the intricate relationships between categorical variables and their potential influence on student outcomes. The overlap between support systems, aspirations, and extracurricular involvement emphasizes the need for a holistic approach to improving student performance, particularly through fostering aspirations for higher education and enhancing support systems.
-
-### **Implications and Conclusion of Section 4**
+### **Part 4 Implications**
 
 This analysis highlights the significant role of background factors in shaping student performance. Aspirations for higher education strongly correlate with better academic outcomes, reducing "Low" grades and increasing "High" grades. Both family and school support systems contribute uniquely: **family support** helps improve "Medium" grades, while **school support** plays a critical role in mitigating "Low" grades.
 
@@ -548,15 +426,15 @@ The relationships among categorical variables, such as gender, extracurricular a
 
 In conclusion, fostering aspirations, strengthening family and school support, and encouraging early and extracurricular involvement can collectively create a foundation for academic success and equitable opportunities.
 
-## Part5. Multivariate Analysis and Comprehensive Patterns
+## Part5: Multivariate Analysis and Comprehensive Patterns
 
 This section presents a comprehensive exploration of multivariate relationships and patterns within the dataset. The **Parallel Coordinate Plot** visualizes normalized values of various academic, behavioral, and contextual variables categorized by school choice reasons. The **PCA Biplot** illustrates the contributions of different variables in separating the final grade (`G3`) groups into Low, Medium, and High categories.
 
 ------------------------------------------------------------------------
 
-### 1. Parallel Coordinate Plot - Academic and Behavioral Variables by School Choice Reason
+### 1. Academic and Behavioral Variables by School Choice Reason
 
-This plot provides a detailed view of academic and behavioral variables for students grouped by their school choice reasons: **course**, **home**, **other**, and **reputation**.
+This Parallel Coordinate Plot provides a detailed view of academic and behavioral variables for students grouped by their school choice reasons: **course**, **home**, **other**, and **reputation**.
 
 ```{r}
 library(GGally)
@@ -601,6 +479,7 @@ Students in the **other** group show the lowest grades and higher variability ac
 
 Finally, the **course** group displays moderate performance, with notable variation in study time and health metrics, suggesting a balanced but less focused academic profile compared to the reputation group.
 
+
 #### Insights
 
 -   **High grades** are strongly associated with the reputation group, likely due to parental education and structured family environments.
@@ -612,10 +491,6 @@ Finally, the **course** group displays moderate performance, with notable variat
 ### 2. PCA Biplot - Variables and G3 Grade Groups
 
 This PCA Biplot maps students into Low, Medium, and High G3 grade groups while illustrating the influence of academic, behavioral, and contextual variables on grade differentiation.
-=======
-This density plot, faceted by guardian type, shows the progression of grades (G1, G2, G3) with consistent improvement from G1 to G3 across all guardians. The "father" and "mother" categories display tightly grouped distributions with peaks in the middle-to-high range, while the "other" category shows greater variability in G3 grades. This suggests a potential relationship between guardian type and grade progression, with G3 consistently achieving higher densities across all groups.
-
->>>>>>> 8933e5d65f5160f7a035ba0b3e9ea342775c14a1
 
 ```{r}
 # Load necessary libraries
@@ -660,7 +535,6 @@ ggplot(aggregated_data, aes(x = PC1, y = PC2, color = G3_group)) +
 ```
 
 This PCA biplot effectively illustrates the relationships between variables and their influence on distinguishing G3 grade groups (Low, Medium, High). Key variables like studytime, Medu, and Fedu align with higher grades, while failures and age are associated with lower grades. The directions and proximities of arrows reveal correlations among variables, such as Walc and Dalc. The separation of G3 groups along PC1 highlights how these variables differentiate grade performance, making the plot a valuable tool for understanding underlying patterns.
-<<<<<<< HEAD
 
 #### Commentary
 
@@ -775,128 +649,12 @@ ggplot(data) +
     fill = "Participation in Activities"
   )
 
-=======
-```{r}
-library(dplyr)
-library(ggalluvial)
-
-
-data_grouped <- data %>%
-  select(G1, G2, G3) %>%
-  mutate(
-    G1_group = case_when(
-      G1 >= 15 ~ "High",
-      G1 >= 10 ~ "Medium",
-      TRUE ~ "Low"
-    ),
-    G2_group = case_when(
-      G2 >= 15 ~ "High",
-      G2 >= 10 ~ "Medium",
-      TRUE ~ "Low"
-    ),
-    G3_group = case_when(
-      G3 >= 15 ~ "High",
-      G3 >= 10 ~ "Medium",
-      TRUE ~ "Low"
-    )
-  ) %>%
-  select(G1_group, G2_group, G3_group)
-
-ggplot(data_grouped, aes(axis1 = G1_group, axis2 = G2_group, axis3 = G3_group)) +
-  geom_alluvium(aes(fill = G3_group)) +
-  geom_stratum() +
-  geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
-  scale_x_discrete(limits = c("G1", "G2", "G3")) +
-  theme_minimal() +
-  labs(
-    title = "The correlation between G1, G2 and G3 grades",
-    x = "Achievement stage",
-    y = "Number of students",
-    fill = "G3 Grades"
-  )
-```
-```{r}
-library(ggplot2)
-library(ggridges)
-
-data_Medu <- data %>%
-  mutate(
-    Medu = factor(Medu, labels = c("None", "Primary", "Middle", "Secondary", "Higher"))
-  )
-
-ggplot(data_Medu, aes(x = G3, y = Medu, fill = Medu)) +
-  geom_boxplot(alpha = 0.7, outlier.color = "red", outlier.shape = 16) +
-  scale_fill_manual(values = c("None" = "#D3D3D3", "Primary" = "#ADD8E6", 
-                               "Middle" = "#87CEFA", "Secondary" = "#4682B4", "Higher" = "#000080")) +
-  theme_minimal(base_size = 14) +
-  coord_flip() + 
-  theme(
-    legend.position = "none", 
-    axis.text.y = element_text(size = 12), 
-    axis.text.x = element_text(size = 12)
-  ) +
-  labs(
-    title = "Impact of Mother's Education Level on Final Grades",
-    x = "Final Grade (G3)",
-    y = "Mother's Education Level"
-  )
-```
-
-```{r}
-data_famrel <- data %>%
-  mutate(
-    famrel = factor(famrel, labels = c("Very Poor", "Poor", "Average", "Good", "Very Good"))
-  )
-
-ggplot(data_famrel, aes(x = G3, y = famrel, fill = famrel)) +
-  geom_density_ridges(alpha = 0.8, scale = 1.5) + 
-  scale_fill_viridis_d(option = "D") + 
-  theme_minimal(base_size = 14) +
-  theme(
-    legend.position = "none",  
-    axis.text.y = element_text(size = 12),
-    axis.text.x = element_text(size = 12)
-  ) +
-  labs(
-    title = "Distribution of Final Grades (G3) by Family Relationship",
-    x = "Final Grade (G3)",
-    y = "Family Relationship",
-    fill = "Family Relationship"
-  )
-
-```
-
-```{r}
-library(ggplot2)
-
-ggplot(data, aes(x = absences, y = G3, color = sex)) +
-  geom_point(alpha = 0.7, size = 2) +
-  facet_wrap(~ failures, labeller = labeller(failures = c(
-    "0" = "No Failures",
-    "1" = "1 Failure",
-    "2" = "2 Failures",
-    "3" = "3 Failures",
-    "4" = "4+ Failures"
-  ))) +
-  theme_minimal(base_size = 14) +
-  labs(
-    title = "Absences vs Final Grades by Failures and Gender",
-    x = "Absences",
-    y = "Final Grades (G3)",
-    color = "Gender"
-  )
->>>>>>> 8933e5d65f5160f7a035ba0b3e9ea342775c14a1
 ```
 
 ```{r}
 ggplot(data, aes(x = G3)) +
   geom_histogram(aes(y = ..density..), binwidth = 1, fill = "skyblue", color = "black", alpha = 0.7) +
-<<<<<<< HEAD
   geom_density(color = "red", size = 1) +
-=======
-  geom_density(aes(color = sex), size = 1) + 
-  scale_color_manual(values = c("F" = "royalblue", "M" = "red"), name = "Gender") +
->>>>>>> 8933e5d65f5160f7a035ba0b3e9ea342775c14a1
   facet_wrap(~ health, labeller = labeller(health = c(
     "1" = "Very Poor",
     "2" = "Poor",
@@ -909,46 +667,7 @@ ggplot(data, aes(x = G3)) +
     title = "Distribution of Final Grades (G3) by Health Status",
     x = "Final Grades (G3)",
     y = "Density",
-<<<<<<< HEAD
     subtitle = "Faceted by Health Status"
   )
 
 ```
-=======
-    subtitle = "Faceted by Health Status",
-    color = "Gender"
-  )
-```
-```{r}
-library(jsonlite)
-
-# Load your dataset
-
-# Unique family relationship levels
-family_levels <- unique(data$famrel)
-
-# Prepare a list to store results
-density_data <- list()
-
-for (level in family_levels) {
-  # Filter data for the current level
-  subset <- data$G3[data$famrel == level]
-  
-  # Calculate density
-  density_result <- density(subset, from = 0, to = 20) # Adjust range as needed
-  
-  # Store results
-  density_data[[level]] <- list(
-    x = density_result$x,
-    y = density_result$y
-  )
-}
-
-# Save as JSON
-write(toJSON(density_data, pretty = TRUE), "density_data.json")
-print("Density data saved to density_data.json")
-
-```
-
-
->>>>>>> 8933e5d65f5160f7a035ba0b3e9ea342775c14a1
