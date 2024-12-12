@@ -1,13 +1,53 @@
 # Interactive graph
 
 <style>
-  * {
-    font-family: sans-serif;
-  }
-</style> 
+        body {
+            overflow-y: auto; 
+            margin: 0; 
+        }
+        #plot {
+            width: 100%;
+            length: 100%;
+            margin: auto;
+            text-align: center;
+        }
+        button {
+            border-radius: 8px;
+            background-color: #FFF8DC; 
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #483D8B;
+            cursor: pointer;
+        }
+        svg {
+            display: block;
+            margin: auto;
+        }
+        .axis text {
+            font-size: 12px;
+        }
+        .mean-line {
+            stroke: red;
+            stroke-width: 2;
+            stroke-dasharray: 4;
+        }
+        .area {
+            fill-opacity: 0.3; 
+        }
+    </style>
 
-<div id="plot">
-</div>
 
+<svg id="plot" width="700" height="300"></svg>
+<button id="prevButton">Family Relationship Level Down</button>
+<button id="nextButton">Family Relationship Level Up</button>
+
+    
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script src="scripts/myscript.js"></script>
+
+## How to Use the Interactive Graph
+This interactive graph allows you to explore the distribution of final grades (G3) based on family relationship levels. Use the buttons below to navigate through different levels of family relationships. The graph will display the density of grades, with a red dashed line indicating the mean grade for the selected level.
+
+## Key Insights from the Visualizatio
+This visualization reveals several noteworthy patterns. As the quality of family relationships improves, there is a clear shift in the distribution of final grades toward higher values. For example, students with "Very Good" family relationships exhibit higher final grades compared to those with "Very Poor" relationships. The peak of the distribution for "Very Poor" relationships is concentrated around lower grades, whereas the peak for "Very Good" relationships is centered on higher grades. This suggests a positive association between strong family relationships and better academic performance. Additionally, the varying shapes and spreads of the distributions reflect the level of grade variability within each family relationship category. Broader distributions indicate greater diversity in academic outcomes. These findings emphasize the potential role of familial support in influencing students' academic success, underscoring the importance of a supportive home environment in shaping educational outcomes.
