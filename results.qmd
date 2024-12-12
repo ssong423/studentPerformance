@@ -418,7 +418,7 @@ When support systems are combined, the best outcomes are observed. Students with
 
 This visualization underscores the importance of aspirations and support systems—both familial and institutional—in shaping academic performance. It highlights the need for targeted interventions to ensure students without support or aspirations are not left behind.
 
-### **Part 4 Implications**
+### **Paer 4 Implications**
 
 This analysis highlights the significant role of background factors in shaping student performance. Aspirations for higher education strongly correlate with better academic outcomes, reducing "Low" grades and increasing "High" grades. Both family and school support systems contribute uniquely: **family support** helps improve "Medium" grades, while **school support** plays a critical role in mitigating "Low" grades.
 
@@ -426,11 +426,13 @@ The relationships among categorical variables, such as gender, extracurricular a
 
 In conclusion, fostering aspirations, strengthening family and school support, and encouraging early and extracurricular involvement can collectively create a foundation for academic success and equitable opportunities.
 
-## Part5: Multivariate Analysis and Comprehensive Patterns
+
+## Part5. Multivariate Analysis and Comprehensive Patterns
 
 This section presents a comprehensive exploration of multivariate relationships and patterns within the dataset. The **Parallel Coordinate Plot** visualizes normalized values of various academic, behavioral, and contextual variables categorized by school choice reasons. The **PCA Biplot** illustrates the contributions of different variables in separating the final grade (`G3`) groups into Low, Medium, and High categories.
 
 ------------------------------------------------------------------------
+
 
 ### 1. Academic and Behavioral Variables by School Choice Reason
 
