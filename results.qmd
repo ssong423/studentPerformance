@@ -324,7 +324,7 @@ Understanding the broader context of students' academic performance requires ana
 
 ### 1. Impact of Support Types on G3 Classification
 
-This mosaic plot investigates the combined impact of **family support (famsup)**, **school support (schoolsup)**, and **aspirations for higher education (higher)** on students' G3 grade group classifications: High, Medium, and Low.
+This mosaic pairs plot provides a comprehensive overview of the relationships among categorical variables such as gender, support systems, extracurricular activities, and educational aspirations. By visualizing pairwise associations, the plot highlights patterns and potential dependencies between these factors, offering insights into how various support and demographic elements interact within the student population.
 
 ```{r, fig.width=14, fig.height=14}
 library(vcd)
@@ -345,17 +345,31 @@ pairs(data_table, highlighting = 2,
       main = "Mosaic Pairs Plot: Categorical Variables Relationships")
 ```
 
-**Higher Education Aspirations**\
-Students who aspire to higher education are significantly more likely to achieve "High" or "Medium" grades, with a substantial reduction in "Low" grades compared to those without such aspirations. This trend persists across various combinations of family and school support, suggesting that aspirations for higher education play a critical role in driving academic performance.
+1.  **Gender Distribution and Support Systems**:
 
-**Support Systems**
+    -   Female students outnumber male students, as evident from the gender distribution.
 
--   **Family Support**: Students receiving family support exhibit a slight increase in "Medium" grades but do not show a notable improvement in achieving "High" grades compared to those without family support.
+    -   School and family support (schoolsup and famsup) exhibit slight imbalances, with "no" responses being more common for family support, while school support has a greater proportion of "yes" responses.
 
--   **School Support**: The impact of school support is more pronounced, leading to a noticeable reduction in "Low" grades and a corresponding increase in "Medium" and "High" grades. This suggests that school-provided resources or guidance may help mitigate challenges faced by struggling students.
+2.  **Higher Education Aspirations**:
 
-**Combined Effects**\
-The combination of aspirations for higher education with either family or school support results in the most favorable outcomes. Students in this group achieve a higher proportion of "High" grades compared to others. In contrast, those lacking both aspirations and support are disproportionately represented in the "Low" grade category, indicating the compounded negative impact of limited support and motivation.
+    A large proportion of students aspire to pursue higher education (higher = yes). This group shows strong overlap with students who have received school and family support, suggesting a possible link between support systems and long-term educational goals.
+
+3.  **Extracurricular Activities**:
+
+    Participation in extracurricular activities (activities = yes) is positively associated with both higher education aspirations and family support. Students involved in activities often have a broader support network, reinforcing the importance of engagement beyond academics.
+
+4.  **Nursery Attendance and Aspirations**:
+
+    Students who attended nursery school (nursery = yes) are more likely to aspire to higher education, indicating a potential long-term benefit of early educational exposure.
+
+5.  **Other Variables and Patterns**:
+
+    Internet access (internet = yes) and being in a romantic relationship (romantic = yes) are relatively evenly distributed across categories, showing no strong associations with support systems or higher education aspirations.
+
+### Interpretation:
+
+This plot underscores the interplay of support systems, aspirations, and other categorical factors in shaping students' educational experiences. The strong connection between higher education aspirations and support—both familial and institutional—highlights the importance of fostering a supportive environment. Additionally, early education (e.g., nursery attendance) and extracurricular activities appear to have long-term positive influences on students' goals and engagement. These insights can inform strategies to better support students in achieving their academic and personal objectives.
 
 ### **2. Mosaic Pairs Plot**
 
@@ -396,35 +410,15 @@ vcd::mosaic(G3_group ~ famsup + higher + schoolsup,
 
 ```
 
-1.  **Gender Distribution**:
+Students with aspirations for higher education consistently achieve better academic outcomes. A significant proportion of these students fall into the "High" and "Medium" G3 grade categories, while the "Low" category is markedly reduced compared to students without such aspirations. This underscores the motivational role of higher education goals in driving academic success.
 
-    -   There is a higher proportion of female students compared to males.
+The presence of family and school support also plays a critical role. School support is particularly effective in reducing the proportion of "Low" grades while boosting "Medium" and "High" outcomes, especially for students with aspirations for higher education. Family support, while slightly less impactful than school support in this context, still contributes positively to better grades.
 
-    -   Gender does not appear to significantly influence other variables like school or family support.
+When support systems are combined, the best outcomes are observed. Students with both family and school support, coupled with aspirations for higher education, show the highest proportion of "High" grades. Conversely, students without any support systems or aspirations are more likely to be concentrated in the "Low" grade category, highlighting the compounding disadvantage of lacking these key factors.
 
-2.  **Support Relationships**:
+This visualization underscores the importance of aspirations and support systems—both familial and institutional—in shaping academic performance. It highlights the need for targeted interventions to ensure students without support or aspirations are not left behind.
 
-    -   Students with aspirations for higher education are more likely to have family and school support.
-
-    -   Interestingly, students without family support still show some inclination towards school support, indicating the importance of school intervention in such cases.
-
-3.  **Activity and Support**:
-
-    -   Participation in extracurricular activities (activities = yes) is positively associated with both aspirations for higher education and family support. This suggests a broader support network for students actively engaged in school activities.
-
-4.  **Nursery Attendance and Higher Education**:
-
-    -   A significant proportion of students who attended nursery school also aspire to higher education. This could indicate a link between early education and long-term academic aspirations.
-
-#### **Implications**:
-
-This analysis highlights the intricate relationships between categorical variables and their potential influence on student outcomes. The overlap between support systems, aspirations, and extracurricular involvement emphasizes the need for a holistic approach to improving student performance, particularly through fostering aspirations for higher education and enhancing support systems.
-
-### **Implications and Conclusion of Section 4**
-
-#### **Implications**:
-
-These observations highlight the importance of fostering aspirations for higher education and providing robust support systems, particularly within schools. While family support has a moderate influence, school support appears more impactful in reducing the likelihood of poor academic outcomes. Interventions should focus on enhancing school support mechanisms and encouraging higher education aspirations to improve overall student performance, especially for those at risk of falling into the "Low" grade category.
+### **Paer 4 Implications**
 
 This analysis highlights the significant role of background factors in shaping student performance. Aspirations for higher education strongly correlate with better academic outcomes, reducing "Low" grades and increasing "High" grades. Both family and school support systems contribute uniquely: **family support** helps improve "Medium" grades, while **school support** plays a critical role in mitigating "Low" grades.
 
