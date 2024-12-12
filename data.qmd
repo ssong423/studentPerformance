@@ -42,3 +42,6 @@ vis_miss(data) +
 
 ```
 The dataset is complete with no missing values, which simplifies preprocessing. However, we will monitor data consistency and outliers in subsequent analyses.
+
+
+

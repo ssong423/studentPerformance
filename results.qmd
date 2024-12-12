@@ -426,15 +426,17 @@ The relationships among categorical variables, such as gender, extracurricular a
 
 In conclusion, fostering aspirations, strengthening family and school support, and encouraging early and extracurricular involvement can collectively create a foundation for academic success and equitable opportunities.
 
+
 ## Part5. Multivariate Analysis and Comprehensive Patterns
 
 This section presents a comprehensive exploration of multivariate relationships and patterns within the dataset. The **Parallel Coordinate Plot** visualizes normalized values of various academic, behavioral, and contextual variables categorized by school choice reasons. The **PCA Biplot** illustrates the contributions of different variables in separating the final grade (`G3`) groups into Low, Medium, and High categories.
 
 ------------------------------------------------------------------------
 
-### 1. Parallel Coordinate Plot - Academic and Behavioral Variables by School Choice Reason
 
-This plot provides a detailed view of academic and behavioral variables for students grouped by their school choice reasons: **course**, **home**, **other**, and **reputation**.
+### 1. Academic and Behavioral Variables by School Choice Reason
+
+This Parallel Coordinate Plot provides a detailed view of academic and behavioral variables for students grouped by their school choice reasons: **course**, **home**, **other**, and **reputation**.
 
 ```{r}
 library(GGally)
@@ -478,6 +480,7 @@ The **home** group exhibits moderate grades and relatively good health, aligning
 Students in the **other** group show the lowest grades and higher variability across most variables, such as absenteeism and alcohol consumption. This group's behavior and performance patterns indicate potential external challenges or lack of motivation.
 
 Finally, the **course** group displays moderate performance, with notable variation in study time and health metrics, suggesting a balanced but less focused academic profile compared to the reputation group.
+
 
 #### Insights
 
@@ -534,6 +537,7 @@ ggplot(aggregated_data, aes(x = PC1, y = PC2, color = G3_group)) +
 ```
 
 This PCA biplot effectively illustrates the relationships between variables and their influence on distinguishing G3 grade groups (Low, Medium, High). Key variables like studytime, Medu, and Fedu align with higher grades, while failures and age are associated with lower grades. The directions and proximities of arrows reveal correlations among variables, such as Walc and Dalc. The separation of G3 groups along PC1 highlights how these variables differentiate grade performance, making the plot a valuable tool for understanding underlying patterns.
+
 
 #### Commentary
 
