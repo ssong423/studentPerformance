@@ -418,7 +418,7 @@ The relationships among categorical variables, such as gender, extracurricular a
 
 In conclusion, fostering aspirations, strengthening family and school support, and encouraging early and extracurricular involvement can collectively create a foundation for academic success and equitable opportunities.
 
-## Part5: Multivariate Analysis and Comprehensive Patterns
+## **Part5: Multivariate Analysis and Comprehensive Patterns
 
 This section presents a comprehensive exploration of multivariate relationships and patterns within the dataset. The **Parallel Coordinate Plot** visualizes normalized values of various academic, behavioral, and contextual variables categorized by school choice reasons. The **PCA Biplot** illustrates the contributions of different variables in separating the final grade (`G3`) groups into Low, Medium, and High categories.
 
