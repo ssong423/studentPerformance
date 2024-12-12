@@ -1,3 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        #plot-container {
+            width: 80%;
+            margin: auto;
+            text-align: center;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        svg {
+            display: block;
+            margin: auto;
+        }
+        .axis text {
+            font-size: 12px;
+        }
+        .mean-line {
+            stroke: red;
+            stroke-width: 2;
+            stroke-dasharray: 4;
+        }
+        .area {
+            fill-opacity: 0.3; /* Adjust the transparency of the fill */
+        }
+    </style>
+</head>
+<body>
+    <div id="plot-container">
+        <svg id="plot" width="900" height="500"></svg>
+        <button id="prevButton">Family Relationship Level Down</button>
+        <button id="nextButton">Family Relationship Level Up</button>
+    </div>
+
+    <script>
         const familyLevels = ["Very Poor", "Poor", "Average", "Good", "Very Good"];
         const colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd"];
         const dataByFamilyLevel = {
@@ -48,8 +89,8 @@
         plotArea.append("g").attr("class", "x-axis").attr("transform", `translate(0,${height})`).call(d3.axisBottom(xScale));
         plotArea.append("g").attr("class", "y-axis").call(d3.axisLeft(yScale));
 
+        plotArea.append("path").attr("class", "area").attr("fill-opacity", 0.3); // Initialize area
         plotArea.append("path").attr("class", "line").attr("fill", "none").attr("stroke-width", 2);
-
         plotArea.append("line").attr("class", "mean-line");
 
         function calculateMean(x, y) {
@@ -58,96 +99,69 @@
             return total / count;
         }
 
-// Add a linear gradient definition in the SVG
-const defs = svg.append("defs");
-const gradient = defs.append("linearGradient")
-    .attr("id", "line-gradient")
-    .attr("x1", "0%")
-    .attr("x2", "100%")
-    .attr("y1", "0%")
-    .attr("y2", "0%");
+        function updatePlot() {
+            const currentLevel = familyLevels[currentIndex];
+            const { x, y } = dataByFamilyLevel[currentLevel];
+            const color = colors[currentIndex];
+            const mean = calculateMean(x, y);
 
-// Add gradient stops (we'll update these dynamically)
-gradient.append("stop").attr("class", "stop1").attr("offset", "0%").attr("stop-color", colors[0]);
-gradient.append("stop").attr("class", "stop2").attr("offset", "100%").attr("stop-color", colors[1]);
+            // Create an area generator
+            const area = d3.area()
+                .x((d, i) => xScale(x[i]))
+                .y0(yScale(0)) // Bottom of the area (y = 0)
+                .y1((d) => yScale(d)) // Top of the area based on data
+                .curve(d3.curveBasis); // Use curve for smoother transitions
 
-// Area and line paths
-plotArea.append("path").attr("class", "line").attr("fill", "none").attr("stroke-width", 2).attr("stroke", "url(#line-gradient)");
-plotArea.append("path").attr("class", "area").attr("fill", "url(#line-gradient)").attr("fill-opacity", 0.3);
+            // Update the area fill
+            plotArea.select(".area")
+                .datum(y) // Bind data
+                .attr("d", area) // Set the area path
+                .attr("fill", color); // Set the fill color
 
-// Update Plot Function
-function updatePlot() {
-    const currentLevel = familyLevels[currentIndex];
-    const { x, y } = dataByFamilyLevel[currentLevel];
-    const nextColor = colors[currentIndex];
-    const mean = calculateMean(x, y);
+            // Update the line
+            const line = d3.line()
+                .x((d, i) => xScale(x[i]))
+                .y((d, i) => yScale(d))
+                .curve(d3.curveBasis);
 
-    // Update Gradient Stops
-    gradient.select(".stop1").transition().duration(1000).attr("stop-color", nextColor);
-    gradient.select(".stop2").transition().duration(1000).attr("stop-color", d3.rgb(nextColor).darker(1));
+            plotArea.select(".line")
+                .datum(y)
+                .attr("d", line)
+                .attr("stroke", color);
 
-    // Update Area
-    const area = d3.area()
-        .x((d, i) => xScale(x[i]))
-        .y0(yScale(0))
-        .y1((d) => yScale(d))
-        .curve(d3.curveBasis);
+            // Update the mean line
+            plotArea.select(".mean-line")
+                .attr("x1", xScale(mean))
+                .attr("x2", xScale(mean))
+                .attr("y1", 0)
+                .attr("y2", height)
+                .attr("stroke", "red");
 
-    plotArea.select(".area")
-        .datum(y)
-        .transition()
-        .duration(1000) // Transition for area shape
-        .attr("d", area);
-
-    // Update Line
-    const line = d3.line()
-        .x((d, i) => xScale(x[i]))
-        .y((d, i) => yScale(d))
-        .curve(d3.curveBasis);
-
-    plotArea.select(".line")
-        .datum(y)
-        .transition()
-        .duration(1000) // Transition for line shape
-        .attr("d", line);
-
-    // Update Mean Line
-    plotArea.select(".mean-line")
-        .transition()
-        .duration(1000)
-        .attr("x1", xScale(mean))
-        .attr("x2", xScale(mean))
-        .attr("y1", 0)
-        .attr("y2", height);
-
-    // Update Title
-    svg.select(".title").remove();
+            // Update the title
+            svg.select(".title").remove();
             svg.append("text")
                 .attr("class", "title")
                 .attr("x", width / 2 + margin.left)
-                .attr("y", margin.top)
+                .attr("y", margin.top / 2)
                 .attr("text-anchor", "middle")
-                .style("font-size", "21px")  // Change font size
-                .style("font-family", "Arial, sans-serif")  // Change font style
-                .style("fill", "#483D8B")  // Change text color
-                .style("font-weight", "bold")  // Make it bold
                 .text(`Distribution of Final Grades (G3) by Family Relationship: ${currentLevel}`);
-}
+        }
 
-// Add Event Listeners for Buttons
-document.getElementById("prevButton").addEventListener("click", () => {
-    if (currentIndex > 0) {
-        currentIndex--;
+        document.getElementById("prevButton").addEventListener("click", () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updatePlot();
+            }
+        });
+
+        document.getElementById("nextButton").addEventListener("click", () => {
+            if (currentIndex < familyLevels.length - 1) {
+                currentIndex++;
+                updatePlot();
+            }
+        });
+
         updatePlot();
-    }
-});
-
-document.getElementById("nextButton").addEventListener("click", () => {
-    if (currentIndex < familyLevels.length - 1) {
-        currentIndex++;
-        updatePlot();
-    }
-});
-
-// Initial Plot
-updatePlot();
+    </script>
+</body>
+</html>

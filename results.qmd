@@ -1,4 +1,5 @@
 # Results
+<<<<<<< HEAD
 
 Understanding the progression of student performance across different stages is crucial for identifying trends and patterns. This section focuses on the three academic stages:
 
@@ -188,6 +189,115 @@ Despite these trends, some overlap exists in the middle-grade range (10-15), ind
 
 ### **3. Guardianship and Grade Distribution**
 
+=======
+```{r}
+library(GGally)
+library(dplyr)
+library(readr)
+
+
+data <- read_delim("student-por.csv", delim = ";", col_names = TRUE, show_col_types = FALSE)
+
+
+numeric_columns <- sapply(data, is.numeric)
+
+data[, c(3, 7, 8, 13, 14, 15, 24:33)] <- scale(data[, c(3, 7, 8, 13, 14, 15, 24:33)])
+
+summarized_data <- data %>%
+  group_by(reason) %>%
+  summarize(across(where(is.numeric), mean))
+
+# Ensure categorical variables are factors
+data$reason <- as.factor(data$reason)
+
+ggparcoord(
+    data = data,
+    columns = c(3, 7, 8, 13, 14, 15, 24:33),  
+    groupColumn = "reason",                 
+    scale = "globalminmax",                  
+    title = "Parallel Coordinate Plot for Student Data"
+) +
+theme_minimal()
+
+```
+
+
+
+```{r}
+
+library(GGally)
+library(dplyr)
+library(readr)
+
+
+data <- read_delim("student-por.csv", delim = ";", col_names = TRUE, show_col_types = FALSE)
+# scale the data or not
+#data[, c(3, 7, 8, 13, 14, 15, 24:33)] <- scale(data[, c(3, 7, 8, 13, 14, 15, 24:33)])
+
+summarized_data <- data %>%
+    group_by(reason) %>%
+    summarize(across(where(is.numeric), mean))
+
+ggparcoord(
+    data = summarized_data,
+    columns = 2:ncol(summarized_data),  
+    groupColumn = 1,                   
+    scale = "globalminmax",
+    alphaLines = 0.5
+) +
+    theme_minimal() +
+    theme(
+        axis.text.x = element_text(angle = 45, hjust = 1), 
+        plot.margin = margin(10, 20, 10, 20)               
+    )
+```
+This parallel coordinate plot highlights group-level differences based on the reason for school choice. The reputation group consistently performs better academically (higher grades in G1, G2, G3) and has higher parental education levels (Medu, Fedu), suggesting a stronger academic focus and support system. In contrast, the other group tends to underperform in grades, indicating potential challenges or differing motivations. Behavioral variables like Dalc (weekday alcohol consumption) and Walc (weekend alcohol consumption) show little variation across groups, while the home group demonstrates slightly better health and lower absences, possibly due to proximity benefits. These patterns suggest a need for tailored support for underperforming groups like other.
+
+
+```{r, fig.width=14, fig.height=14}
+library(vcd)
+
+# Subset your categorical columns
+categorical_data <- data[, c(2, 16:23)]
+
+# Ensure all categorical columns are factors
+categorical_data[] <- lapply(categorical_data, as.factor)
+
+# Create a contingency table
+data_table <- table(categorical_data)
+
+par(cex = 0.1, mar = c(5, 5, 5, 5))  # Adjust text scaling and margins
+
+# Create a mosaic pairs plot
+pairs(data_table, highlighting = 2)
+```
+This mosaic plot highlights the distribution and relationships among categorical variables, showing dominant categories such as more females (F), prevalent yes responses for variables like higher, internet, and romantic, and notable imbalances in categories like schoolsup and famsup. Pairwise associations, such as students with nursery = yes often having higher = yes, provide insights into potential dependencies. 
+
+
+```{r, fig.width=16, fig.height=12}
+library(vcd)
+library(dplyr)
+library(forcats)
+library(RColorBrewer)
+
+data$G3_group <- case_when(
+  data$G3 >= 15 ~ "High",
+  data$G3 >= 10 ~ "Medium",
+  TRUE ~ "Low"
+)
+data$G3_group <- as.factor(data$G3_group)
+
+palette <- brewer.pal(n = length(levels(data$G3_group)), name = "Set3")
+
+vcd::mosaic(G3_group ~ famsup + higher + schoolsup, 
+            data, 
+            direction = c("v", "v", "v", "h"),
+            highlighting_fill = palette,
+            main = "Mosaic Plot of G3 Grade Group by Family Support and Higher Education"
+            )
+```
+
+>>>>>>> 8933e5d65f5160f7a035ba0b3e9ea342775c14a1
 ```{r}
 library(ggplot2)
 library(tidyr)
@@ -207,8 +317,13 @@ ggplot(data_long, aes(x = GradeValue, fill = GradeType, color = GradeType)) +
     x = "Grade Value",
     y = "Density"
   ) +
+<<<<<<< HEAD
   scale_fill_manual(values = c("steelblue", "lightcoral", "darkseagreen")) + # Adjust fill colors
   scale_color_manual(values = c("steelblue", "lightcoral", "darkseagreen")) + # Adjust line colors
+=======
+  scale_fill_manual(values = c("steelblue", "pink", "darkseagreen")) + # Adjust fill colors
+  scale_color_manual(values = c("steelblue", "pink", "darkseagreen")) + # Adjust line colors
+>>>>>>> 8933e5d65f5160f7a035ba0b3e9ea342775c14a1
   theme_minimal() +
   theme(
     legend.title = element_text(size = 12),
@@ -217,6 +332,7 @@ ggplot(data_long, aes(x = GradeValue, fill = GradeType, color = GradeType)) +
   )
 
 ```
+<<<<<<< HEAD
 
 The type of guardian influences students' academic performance, particularly their final grades (G3). Students under "mother" or "father" guardianship tend to have tightly clustered grade distributions, with peaks in the middle-to-high range, reflecting consistent support. In contrast, students under "other" guardianship show broader distributions, indicating greater variability and potentially less stable academic guidance.
 
@@ -496,6 +612,10 @@ Finally, the **course** group displays moderate performance, with notable variat
 ### 2. PCA Biplot - Variables and G3 Grade Groups
 
 This PCA Biplot maps students into Low, Medium, and High G3 grade groups while illustrating the influence of academic, behavioral, and contextual variables on grade differentiation.
+=======
+This density plot, faceted by guardian type, shows the progression of grades (G1, G2, G3) with consistent improvement from G1 to G3 across all guardians. The "father" and "mother" categories display tightly grouped distributions with peaks in the middle-to-high range, while the "other" category shows greater variability in G3 grades. This suggests a potential relationship between guardian type and grade progression, with G3 consistently achieving higher densities across all groups.
+
+>>>>>>> 8933e5d65f5160f7a035ba0b3e9ea342775c14a1
 
 ```{r}
 # Load necessary libraries
@@ -540,6 +660,7 @@ ggplot(aggregated_data, aes(x = PC1, y = PC2, color = G3_group)) +
 ```
 
 This PCA biplot effectively illustrates the relationships between variables and their influence on distinguishing G3 grade groups (Low, Medium, High). Key variables like studytime, Medu, and Fedu align with higher grades, while failures and age are associated with lower grades. The directions and proximities of arrows reveal correlations among variables, such as Walc and Dalc. The separation of G3 groups along PC1 highlights how these variables differentiate grade performance, making the plot a valuable tool for understanding underlying patterns.
+<<<<<<< HEAD
 
 #### Commentary
 
@@ -654,12 +775,128 @@ ggplot(data) +
     fill = "Participation in Activities"
   )
 
+=======
+```{r}
+library(dplyr)
+library(ggalluvial)
+
+
+data_grouped <- data %>%
+  select(G1, G2, G3) %>%
+  mutate(
+    G1_group = case_when(
+      G1 >= 15 ~ "High",
+      G1 >= 10 ~ "Medium",
+      TRUE ~ "Low"
+    ),
+    G2_group = case_when(
+      G2 >= 15 ~ "High",
+      G2 >= 10 ~ "Medium",
+      TRUE ~ "Low"
+    ),
+    G3_group = case_when(
+      G3 >= 15 ~ "High",
+      G3 >= 10 ~ "Medium",
+      TRUE ~ "Low"
+    )
+  ) %>%
+  select(G1_group, G2_group, G3_group)
+
+ggplot(data_grouped, aes(axis1 = G1_group, axis2 = G2_group, axis3 = G3_group)) +
+  geom_alluvium(aes(fill = G3_group)) +
+  geom_stratum() +
+  geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("G1", "G2", "G3")) +
+  theme_minimal() +
+  labs(
+    title = "The correlation between G1, G2 and G3 grades",
+    x = "Achievement stage",
+    y = "Number of students",
+    fill = "G3 Grades"
+  )
+```
+```{r}
+library(ggplot2)
+library(ggridges)
+
+data_Medu <- data %>%
+  mutate(
+    Medu = factor(Medu, labels = c("None", "Primary", "Middle", "Secondary", "Higher"))
+  )
+
+ggplot(data_Medu, aes(x = G3, y = Medu, fill = Medu)) +
+  geom_boxplot(alpha = 0.7, outlier.color = "red", outlier.shape = 16) +
+  scale_fill_manual(values = c("None" = "#D3D3D3", "Primary" = "#ADD8E6", 
+                               "Middle" = "#87CEFA", "Secondary" = "#4682B4", "Higher" = "#000080")) +
+  theme_minimal(base_size = 14) +
+  coord_flip() + 
+  theme(
+    legend.position = "none", 
+    axis.text.y = element_text(size = 12), 
+    axis.text.x = element_text(size = 12)
+  ) +
+  labs(
+    title = "Impact of Mother's Education Level on Final Grades",
+    x = "Final Grade (G3)",
+    y = "Mother's Education Level"
+  )
+```
+
+```{r}
+data_famrel <- data %>%
+  mutate(
+    famrel = factor(famrel, labels = c("Very Poor", "Poor", "Average", "Good", "Very Good"))
+  )
+
+ggplot(data_famrel, aes(x = G3, y = famrel, fill = famrel)) +
+  geom_density_ridges(alpha = 0.8, scale = 1.5) + 
+  scale_fill_viridis_d(option = "D") + 
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "none",  
+    axis.text.y = element_text(size = 12),
+    axis.text.x = element_text(size = 12)
+  ) +
+  labs(
+    title = "Distribution of Final Grades (G3) by Family Relationship",
+    x = "Final Grade (G3)",
+    y = "Family Relationship",
+    fill = "Family Relationship"
+  )
+
+```
+
+```{r}
+library(ggplot2)
+
+ggplot(data, aes(x = absences, y = G3, color = sex)) +
+  geom_point(alpha = 0.7, size = 2) +
+  facet_wrap(~ failures, labeller = labeller(failures = c(
+    "0" = "No Failures",
+    "1" = "1 Failure",
+    "2" = "2 Failures",
+    "3" = "3 Failures",
+    "4" = "4+ Failures"
+  ))) +
+  theme_minimal(base_size = 14) +
+  labs(
+    title = "Absences vs Final Grades by Failures and Gender",
+    x = "Absences",
+    y = "Final Grades (G3)",
+    color = "Gender"
+  )
+>>>>>>> 8933e5d65f5160f7a035ba0b3e9ea342775c14a1
 ```
 
 ```{r}
 ggplot(data, aes(x = G3)) +
   geom_histogram(aes(y = ..density..), binwidth = 1, fill = "skyblue", color = "black", alpha = 0.7) +
+<<<<<<< HEAD
   geom_density(color = "red", size = 1) +
+=======
+  geom_density(aes(color = sex), size = 1) + 
+  scale_color_manual(values = c("F" = "royalblue", "M" = "red"), name = "Gender") +
+>>>>>>> 8933e5d65f5160f7a035ba0b3e9ea342775c14a1
   facet_wrap(~ health, labeller = labeller(health = c(
     "1" = "Very Poor",
     "2" = "Poor",
@@ -672,7 +909,46 @@ ggplot(data, aes(x = G3)) +
     title = "Distribution of Final Grades (G3) by Health Status",
     x = "Final Grades (G3)",
     y = "Density",
+<<<<<<< HEAD
     subtitle = "Faceted by Health Status"
   )
 
 ```
+=======
+    subtitle = "Faceted by Health Status",
+    color = "Gender"
+  )
+```
+```{r}
+library(jsonlite)
+
+# Load your dataset
+
+# Unique family relationship levels
+family_levels <- unique(data$famrel)
+
+# Prepare a list to store results
+density_data <- list()
+
+for (level in family_levels) {
+  # Filter data for the current level
+  subset <- data$G3[data$famrel == level]
+  
+  # Calculate density
+  density_result <- density(subset, from = 0, to = 20) # Adjust range as needed
+  
+  # Store results
+  density_data[[level]] <- list(
+    x = density_result$x,
+    y = density_result$y
+  )
+}
+
+# Save as JSON
+write(toJSON(density_data, pretty = TRUE), "density_data.json")
+print("Density data saved to density_data.json")
+
+```
+
+
+>>>>>>> 8933e5d65f5160f7a035ba0b3e9ea342775c14a1

@@ -1,3 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        #plot-container {
+            width: 100%;
+            margin: auto;
+            text-align: center;
+        }
+        button {
+            border-radius: 8px;
+            background-color: #FFF8DC; 
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #483D8B;
+            cursor: pointer;
+        }
+        svg {
+            display: block;
+            margin: auto;
+        }
+        .axis text {
+            font-size: 12px;
+        }
+        .mean-line {
+            stroke: red;
+            stroke-width: 2;
+            stroke-dasharray: 4;
+        }
+        .area {
+            fill-opacity: 0.3; /* Adjust the transparency of the fill */
+        }
+    </style>
+</head>
+<body>
+    <div id="plot-container">
+        <svg id="plot" width="900" height="500"></svg>
+        <button id="prevButton">Family Relationship Level Down</button>
+        <button id="nextButton">Family Relationship Level Up</button>
+    </div>
+
+    <script>
         const familyLevels = ["Very Poor", "Poor", "Average", "Good", "Very Good"];
         const colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd"];
         const dataByFamilyLevel = {
@@ -151,3 +195,7 @@ document.getElementById("nextButton").addEventListener("click", () => {
 
 // Initial Plot
 updatePlot();
+
+    </script>
+</body>
+</html>
