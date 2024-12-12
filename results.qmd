@@ -536,6 +536,7 @@ ggplot(aggregated_data, aes(x = PC1, y = PC2, color = G3_group)) +
 
 This PCA biplot effectively illustrates the relationships between variables and their influence on distinguishing G3 grade groups (Low, Medium, High). Key variables like studytime, Medu, and Fedu align with higher grades, while failures and age are associated with lower grades. The directions and proximities of arrows reveal correlations among variables, such as Walc and Dalc. The separation of G3 groups along PC1 highlights how these variables differentiate grade performance, making the plot a valuable tool for understanding underlying patterns.
 
+
 #### Commentary
 
 The first principal component (PC1) separates students primarily based on academic variables like **study time**, **Medu**, and **Fedu**. The **High** G3 group aligns closely with these variables, indicating their strong positive impact on academic performance.
