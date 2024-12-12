@@ -199,8 +199,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#background-variables-and-categorical-analysis" id="toc-background-variables-and-categorical-analysis" class="nav-link" data-scroll-target="#background-variables-and-categorical-analysis"><span class="header-section-number">3.4</span> <strong>Background Variables and Categorical Analysis</strong></a>
   <ul class="collapse">
-  <li><a href="#impact-of-support-types-on-g3-classification" id="toc-impact-of-support-types-on-g3-classification" class="nav-link" data-scroll-target="#impact-of-support-types-on-g3-classification"><span class="header-section-number">3.4.1</span> <strong>Impact of Support Types on G3 Classification</strong></a></li>
-  <li><a href="#mosaic-pairs-plot" id="toc-mosaic-pairs-plot" class="nav-link" data-scroll-target="#mosaic-pairs-plot"><span class="header-section-number">3.4.2</span> <strong>Mosaic Pairs Plot</strong></a></li>
+  <li><a href="#mosaic-pairs-plot" id="toc-mosaic-pairs-plot" class="nav-link" data-scroll-target="#mosaic-pairs-plot"><span class="header-section-number">3.4.1</span> <strong>Mosaic Pairs Plot</strong></a></li>
+  <li><a href="#impact-of-support-types-on-g3-classification" id="toc-impact-of-support-types-on-g3-classification" class="nav-link" data-scroll-target="#impact-of-support-types-on-g3-classification"><span class="header-section-number">3.4.2</span> <strong>Impact of Support Types on G3 Classification</strong></a></li>
   <li><a href="#implications-2" id="toc-implications-2" class="nav-link" data-scroll-target="#implications-2"><span class="header-section-number">3.4.3</span> <strong>Implications</strong></a></li>
   </ul></li>
   <li><a href="#multivariate-analysis-and-comprehensive-patterns" id="toc-multivariate-analysis-and-comprehensive-patterns" class="nav-link" data-scroll-target="#multivariate-analysis-and-comprehensive-patterns"><span class="header-section-number">3.5</span> <strong>Multivariate Analysis and Comprehensive Patterns</strong></a>
@@ -240,7 +240,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>G2 (Second Term Grade)</strong>: Indicates students’ mid-year progress, which may be influenced by teaching quality, self-adjustment, and learning pace.</li>
 <li><strong>G3 (Final Grade)</strong>: The culmination of students’ academic efforts, directly affecting their overall academic outcomes.</li>
 </ul>
-<p>The grades in each stage are divided into three categories: - <strong>High (≥15)</strong>: Reflecting excellent performance. - <strong>Medium (10-14)</strong>: Representing average performance. - <strong>Low (&lt;10)</strong>: Indicating below-average performance.</p>
+<p>The grades in each stage are divided into three categories: <strong>High (≥15)</strong>: Reflecting excellent performance. <strong>Medium (10-14)</strong>: Representing average performance. <strong>Low (&lt;10)</strong>: Indicating below-average performance.</p>
 <section id="overall-academic-trends" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="overall-academic-trends"><span class="header-section-number">3.1</span> <strong>Overall Academic Trends</strong></h2>
 <p>The alluvial diagram below illustrates the correlation and flow between students’ grades across G1, G2, and G3 stages. Each stratum represents the number of students in each grade category, while the flows indicate transitions between these categories across the stages.</p>
@@ -467,7 +467,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>The type of guardian influences students’ academic performance, particularly their final grades (G3). Students under “mother” or “father” guardianship tend to have tightly clustered grade distributions, with peaks in the middle-to-high range, reflecting consistent support. In contrast, students under “other” guardianship show broader distributions, indicating greater variability and potentially less stable academic guidance.</p>
+<p>The type of guardian influences students’ academic performance, particularly their final grades (<code>G3</code>). Students under “mother” or “father” guardianship tend to have tightly clustered grade distributions, with peaks in the middle-to-high range, reflecting consistent support. In contrast, students under “other” guardianship show broader distributions, indicating greater variability and potentially less stable academic guidance.</p>
 <p>The density plot shows a steady progression of grades from G1 to G3 across all guardian types, with G3 consistently achieving the highest density. While students with “mother” or “father” guardians maintain concentrated peaks, those with “other” guardians experience more dispersed outcomes, suggesting potential challenges in academic consistency.</p>
 <p>These trends underscore the role of guardianship in shaping academic success, with parents providing a more stable and supportive environment for students’ educational progress.</p>
 </section>
@@ -528,7 +528,7 @@ Gender does not significantly influence the relationship between absences and gr
 </section>
 <section id="health-status-and-grade-distribution" class="level3" data-number="3.3.2">
 <h3 data-number="3.3.2" class="anchored" data-anchor-id="health-status-and-grade-distribution"><span class="header-section-number">3.3.2</span> <strong>Health Status and Grade Distribution</strong></h3>
-<p>This plot visualizes the distribution of final grades (G3) across different levels of health status (<code>Very Poor</code> to <code>Very Good</code>), with density curves representing gender (<code>F</code> for females in blue and <code>M</code> for males in red). The faceted layout allows for a comparison of grade distributions across health levels and between genders within each health category.</p>
+<p>This plot visualizes the distribution of final grades (<code>G3</code>) across different levels of health status (<code>Very Poor</code> to <code>Very Good</code>), with density curves representing gender (<code>F</code> for females in blue and <code>M</code> for males in red). The faceted layout allows for a comparison of grade distributions across health levels and between genders within each health category.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -575,8 +575,8 @@ Gender does not significantly influence the relationship between absences and gr
 <section id="background-variables-and-categorical-analysis" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="background-variables-and-categorical-analysis"><span class="header-section-number">3.4</span> <strong>Background Variables and Categorical Analysis</strong></h2>
 <p>Understanding the broader context of students’ academic performance requires analyzing their background and categorical variables. This section delves into how various types of support systems (family support, school support, and aspirations for higher education) affect G3 grade classification and explores the interdependencies among key categorical variables. Together, these analyses provide insights into the influence of background factors on academic outcomes.</p>
-<section id="impact-of-support-types-on-g3-classification" class="level3" data-number="3.4.1">
-<h3 data-number="3.4.1" class="anchored" data-anchor-id="impact-of-support-types-on-g3-classification"><span class="header-section-number">3.4.1</span> <strong>Impact of Support Types on G3 Classification</strong></h3>
+<section id="mosaic-pairs-plot" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="mosaic-pairs-plot"><span class="header-section-number">3.4.1</span> <strong>Mosaic Pairs Plot</strong></h3>
 <p>This mosaic pairs plot provides a comprehensive overview of the relationships among categorical variables such as gender, support systems, extracurricular activities, and educational aspirations. By visualizing pairwise associations, the plot highlights patterns and potential dependencies between these factors, offering insights into how various support and demographic elements interact within the student population.</p>
 <div class="cell">
 <details class="code-fold">
@@ -624,8 +624,8 @@ Gender does not significantly influence the relationship between absences and gr
 <p><strong>Interpretation:</strong></p>
 <p>This plot underscores the interplay of support systems, aspirations, and other categorical factors in shaping students’ educational experiences. The strong connection between higher education aspirations and support—both familial and institutional—highlights the importance of fostering a supportive environment. Additionally, early education (e.g., nursery attendance) and extracurricular activities appear to have long-term positive influences on students’ goals and engagement. These insights can inform strategies to better support students in achieving their academic and personal objectives.</p>
 </section>
-<section id="mosaic-pairs-plot" class="level3" data-number="3.4.2">
-<h3 data-number="3.4.2" class="anchored" data-anchor-id="mosaic-pairs-plot"><span class="header-section-number">3.4.2</span> <strong>Mosaic Pairs Plot</strong></h3>
+<section id="impact-of-support-types-on-g3-classification" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="impact-of-support-types-on-g3-classification"><span class="header-section-number">3.4.2</span> <strong>Impact of Support Types on G3 Classification</strong></h3>
 <p>This mosaic pairs plot illustrates the relationships between categorical variables, including <strong>gender (sex)</strong>, <strong>family support (famsup)</strong>, <strong>school support (schoolsup)</strong>, <strong>aspirations for higher education (higher)</strong>, and others.</p>
 <div class="cell">
 <details class="code-fold">
@@ -645,8 +645,8 @@ Gender does not significantly influence the relationship between absences and gr
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
 <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">higher =</span> <span class="fu">recode</span>(higher, <span class="st">"yes"</span> <span class="ot">=</span> <span class="st">"Aspires Higher Education"</span>, <span class="st">"no"</span> <span class="ot">=</span> <span class="st">"No Aspiration"</span>),</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">famsup =</span> <span class="fu">recode</span>(famsup, <span class="st">"yes"</span> <span class="ot">=</span> <span class="st">"Family Support"</span>, <span class="st">"no"</span> <span class="ot">=</span> <span class="st">"No Family Support"</span>),</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">schoolsup =</span> <span class="fu">recode</span>(schoolsup, <span class="st">"yes"</span> <span class="ot">=</span> <span class="st">"School Support"</span>, <span class="st">"no"</span> <span class="ot">=</span> <span class="st">"No School Support"</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">famsup =</span> <span class="fu">recode</span>(famsup, <span class="st">"yes"</span> <span class="ot">=</span> <span class="st">"Family Support"</span>, <span class="st">"no"</span> <span class="ot">=</span> <span class="st">"No Family Support"</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">#schoolsup = recode(schoolsup, "yes" = "School Support", "no" = "No School Support")</span></span>
 <span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>palette <span class="ot">&lt;-</span> <span class="fu">brewer.pal</span>(<span class="at">n =</span> <span class="fu">length</span>(<span class="fu">levels</span>(data<span class="sc">$</span>G3_group)), <span class="at">name =</span> <span class="st">"Set3"</span>)</span>
@@ -727,8 +727,8 @@ Gender does not significantly influence the relationship between absences and gr
 <p>This parallel coordinate plot highlights group-level differences based on the reason for school choice. The reputation group consistently performs better academically (higher grades in G1, G2, G3) and has higher parental education levels (Medu, Fedu), suggesting a stronger academic focus and support system. In contrast, the other group tends to underperform in grades, indicating potential challenges or differing motivations. Behavioral variables like Dalc (weekday alcohol consumption) and Walc (weekend alcohol consumption) show little variation across groups, while the home group demonstrates slightly better health and lower absences, possibly due to proximity benefits. These patterns suggest a need for tailored support for underperforming groups like other.</p>
 <p><strong>Insights</strong></p>
 <ul>
-<li><strong>High grades</strong> are strongly associated with the reputation group, likely due to parental education and structured family environments.</li>
-<li><strong>Attendance</strong> (absences and travel time) significantly affects grades, with lower absenteeism linked to better performance.</li>
+<li>High grades are strongly associated with the reputation group, likely due to parental education and structured family environments.</li>
+<li>Attendance (absences and travel time) significantly affects grades, with lower absenteeism linked to better performance.</li>
 <li>Behavioral variables (e.g., alcohol consumption) show a negative correlation with academic achievement across all groups.</li>
 </ul>
 </section>
@@ -788,8 +788,8 @@ Gender does not significantly influence the relationship between absences and gr
 <p>This PCA biplot effectively illustrates the relationships between variables and their influence on distinguishing G3 grade groups (Low, Medium, High). Key variables like studytime, Medu, and Fedu align with higher grades, while failures and age are associated with lower grades. The directions and proximities of arrows reveal correlations among variables, such as Walc and Dalc. The separation of G3 groups along PC1 highlights how these variables differentiate grade performance, making the plot a valuable tool for understanding underlying patterns.</p>
 <p><strong>Insights</strong></p>
 <ul>
-<li><strong>Parental education (Medu, Fedu)</strong> and <strong>study time</strong> are the strongest predictors of high grades.</li>
-<li>Negative behavioral patterns, such as <strong>failures</strong> and <strong>alcohol consumption</strong>, are key indicators of low performance.</li>
+<li>Parental education (Medu, Fedu) and study time are the strongest predictors of high grades.</li>
+<li>Negative behavioral patterns, such as failures and alcohol consumption, are key indicators of low performance.</li>
 <li>Health and family relationships act as stabilizing factors for medium-grade students.</li>
 </ul>
 </section>
