@@ -1,1 +1,678 @@
 # Results
+
+Understanding the progression of student performance across different stages is crucial for identifying trends and patterns. This section focuses on the three academic stages:
+
+-   **G1 (First Term Grade)**: Represents the initial academic performance of students, reflecting their baseline effort and preparedness.
+-   **G2 (Second Term Grade)**: Indicates students' mid-year progress, which may be influenced by teaching quality, self-adjustment, and learning pace.
+-   **G3 (Final Grade)**: The culmination of students' academic efforts, directly affecting their overall academic outcomes.
+
+The grades in each stage are divided into three categories: - **High (≥15)**: Reflecting excellent performance. - **Medium (10-14)**: Representing average performance. - **Low (\<10)**: Indicating below-average performance.
+
+------------------------------------------------------------------------
+
+## **Part 1: Overall Academic Trends**
+
+The alluvial diagram below illustrates the correlation and flow between students' grades across G1, G2, and G3 stages. Each stratum represents the number of students in each grade category, while the flows indicate transitions between these categories across the stages.
+
+```{r}
+library(readr)
+
+data <- read_delim("student-por.csv", delim = ";", col_names = TRUE, show_col_types = FALSE)
+```
+
+```{r}
+library(dplyr)
+library(ggalluvial)
+
+data_grouped <- data %>%
+  dplyr::select(G1, G2, G3) %>%
+  mutate(
+    G1_group = factor(case_when(
+      G1 >= 15 ~ "High",
+      G1 >= 10 ~ "Medium",
+      TRUE ~ "Low"
+    ), levels = c("Low", "Medium", "High")),
+    G2_group = factor(case_when(
+      G2 >= 15 ~ "High",
+      G2 >= 10 ~ "Medium",
+      TRUE ~ "Low"
+    ), levels = c("Low", "Medium", "High")),
+    G3_group = factor(case_when(
+      G3 >= 15 ~ "High",
+      G3 >= 10 ~ "Medium",
+      TRUE ~ "Low"
+    ), levels = c("Low", "Medium", "High"))
+  ) %>%
+  dplyr::select(G1_group, G2_group, G3_group)
+
+ggplot(data_grouped, aes(axis1 = G1_group, axis2 = G2_group, axis3 = G3_group)) +
+  geom_alluvium(aes(fill = G3_group), width = 0.2, alpha = 0.8) +
+  geom_stratum() +
+  geom_text(stat = "stratum", aes(label = after_stat(stratum)), size = 2.5) +
+  scale_x_discrete(limits = c("G1", "G2", "G3")) +
+  theme_minimal() +
+  scale_fill_brewer(type = 'seq') +
+  labs(
+    title = "The correlation between G1, G2 and G3 grades",
+    x = "Achievement stage",
+    y = "Number of students",
+    fill = "G3 Grades"
+  )
+
+```
+
+The diagram reveals significant consistency in grade distribution, particularly among students in the "Medium" category, who maintain their performance across G1, G2, and G3. In contrast, students in the "High" and "Low" categories exhibit more mobility, with noticeable transitions to other groups, particularly between G1 and G3.
+
+Mobility between grade categories suggests that academic performance can fluctuate significantly over time, potentially influenced by external factors such as motivation, teaching quality, or personal circumstances. By the final stage (G3), a majority of students consolidate in the "Medium" category, reflecting a natural tendency toward average performance.
+
+The overall balance of grade distribution across stages remains stable, with no dramatic shifts in the total number of students in each category. However, the transitions highlight opportunities for targeted interventions:
+
+-   **Identify at-risk students** moving to the "Low" category.
+
+-   **Support upward mobility** for students transitioning from "Medium" to "High."
+
+-   **Promote stability** in the "High" category through personalized academic support.
+
+------------------------------------------------------------------------
+
+While this visualization highlights the overall academic trends, it raises questions about the external factors influencing these patterns.
+
+## **Part 2: The Impact of Family Background on Final Grades**
+
+Family background, including parental education levels, family relationships, and guardianship, plays a crucial role in shaping students' academic outcomes. In this section, we explore how these factors influence students' final grades (`G3`).
+
+------------------------------------------------------------------------
+
+### **1. Impact of Parental Education Levels**
+
+The two boxplots depict the impact of **Mother's Education Level** (first graph) and **Father's Education Level** (second graph) on students' final grades (`G3`). The results reveal some similarities and differences in how parental education correlates with academic performance.
+
+```{r}
+library(ggplot2)
+library(ggridges)
+
+data_Medu <- data %>%
+  mutate(
+    Medu = factor(Medu, labels = c("None", "Primary", "Middle", "Secondary", "Higher"))
+  )
+
+ggplot(data_Medu, aes(x = G3, y = Medu, fill = Medu)) +
+  geom_boxplot(alpha = 0.7, outlier.color = "red", outlier.shape = 16) +
+  scale_fill_manual(values = c("None" = "#D3D3D3", "Primary" = "#ADD8E6", 
+                               "Middle" = "#87CEFA", "Secondary" = "#4682B4", "Higher" = "#000080")) +
+  theme_minimal() +
+  coord_flip() + 
+  theme(
+    legend.position = "none", 
+    axis.text.y = element_text(size = 12), 
+    axis.text.x = element_text(size = 12)
+  ) +
+  labs(
+    title = "Impact of Mother's Education Level on Final Grades",
+    x = "Final Grade (G3)",
+    y = "Mother's Education Level"
+  )
+
+```
+
+```{r}
+data_Fedu <- data %>%
+  mutate(
+    Fedu = factor(Fedu, labels = c("None", "Primary", "Middle", "Secondary", "Higher"))
+  )
+
+ggplot(data_Fedu, aes(x = G3, y = Fedu, fill = Fedu)) +
+  geom_boxplot(alpha = 0.7, outlier.color = "red", outlier.shape = 16) +
+  scale_fill_manual(values = c("None" = "#D3D3D3", "Primary" = "#ADD8E6", 
+                               "Middle" = "#87CEFA", "Secondary" = "#4682B4", "Higher" = "#000080")) + 
+  coord_flip() + 
+  theme_minimal() +
+  theme(
+    legend.position = "none", 
+    axis.text.y = element_text(size = 12), 
+    axis.text.x = element_text(size = 12)
+  ) +
+  labs(
+    title = "Impact of Father's Education Level on Final Grades",
+    x = "Final Grade (G3)",
+    y = "Father's Education Level"
+  )
+
+```
+
+Students with parents who have higher education levels ("Higher") consistently achieve better grades, as seen in their higher medians and tighter interquartile ranges (IQR), indicating both stronger and more consistent academic outcomes. This trend is evident for both mothers and fathers, with mothers' education levels having a slightly stronger impact, particularly in the "None" and "Primary" categories.
+
+For parents with "Middle" or "Secondary" education levels, median grades are relatively stable, but variability increases, reflecting a wider range of performance. In contrast, students with parents in the "None" or "Primary" categories have the lowest median grades and the greatest variability, suggesting limited academic support.
+
+Overall, as parental education levels increase, grades improve and become more consistent. This highlights the significant role of educated parents in fostering academic success and reducing performance disparities.
+
+### **2. Influence of Family Relationships**
+
+This ridgeline plot visualizes the distribution of students' final grades (`G3`) across different levels of family relationship quality (`famrel`), ranging from "Very Poor" to "Very Good". The plot highlights how family dynamics might correlate with academic performance.
+
+```{r}
+data_famrel <- data %>%
+  mutate(
+    famrel = factor(famrel, labels = c("Very Poor", "Poor", "Average", "Good", "Very Good"))
+  )
+
+ggplot(data_famrel, aes(x = G3, y = famrel, fill = famrel)) +
+  geom_density_ridges(alpha = 0.8, scale = 1.5) + 
+  scale_fill_viridis_d(option = "D") + 
+  theme_minimal() +
+  theme(
+    legend.position = "none",  
+    axis.text.y = element_text(size = 10),
+    axis.text.x = element_text(size = 10)
+  ) +
+  labs(
+    title = "Distribution of Final Grades by Family Relationship",
+    x = "Final Grade (G3)",
+    y = "Family Relationship",
+    fill = "Family Relationship"
+  )
+  
+```
+
+Family relationship quality has a clear influence on students' academic performance. Students with "Very Good" relationships tend to cluster around higher grades, while those with "Very Poor" relationships exhibit flatter distributions, with a noticeable shift toward lower grades. As the quality of family relationships improves, grades become more concentrated at the upper end, indicating both better performance and consistency. However, students with "Average" relationships display a wider spread of grades, suggesting a mixture of influencing factors beyond family relationships alone.
+
+选一个
+
+Family relationship quality clearly influences students' academic performance, with stronger relationships correlating with better outcomes. Students with "Very Good" family relationships cluster around higher grades (closer to 20) and exhibit tighter distributions, indicating both better performance and greater consistency. Conversely, those with "Very Poor" or "Poor" relationships show broader distributions and lower grades (closer to 0-10), likely reflecting external challenges or instability affecting their academic success.
+
+Students with "Average" or "Good" family relationships fall into a transitional zone, displaying more balanced grade distributions with peaks around the middle grades (10-15). While these groups perform better than students with poorer relationships, they do not reach the consistency or high performance seen in the "Very Good" category.
+
+Despite these trends, some overlap exists in the middle-grade range (10-15), indicating that family relationship quality is not the sole determinant of academic performance. Other factors likely contribute to this variability, suggesting the need for further analysis to fully understand the drivers of academic success.
+
+------------------------------------------------------------------------
+
+### **3. Guardianship and Grade Distribution**
+
+```{r}
+library(ggplot2)
+library(tidyr)
+library(scales) # For a more aesthetic color palette
+
+# Convert the data to long format
+data_long <- data %>%
+  pivot_longer(cols = c(G1, G2, G3), names_to = "GradeType", values_to = "GradeValue")
+
+# Plot with modifications
+ggplot(data_long, aes(x = GradeValue, fill = GradeType, color = GradeType)) +
+  #geom_histogram(aes(y = ..density..), position = "identity", alpha = 0.3, bins = 10) + # Use density
+  geom_density(alpha = 0.3, size = 0.8) + # Overlay density curves
+  facet_wrap(~ guardian, scales = "free") + # Facet by guardian
+  labs(
+    title = "Distribution of G1, G2, and G3 by Guardian",
+    x = "Grade Value",
+    y = "Density"
+  ) +
+  scale_fill_manual(values = c("steelblue", "lightcoral", "darkseagreen")) + # Adjust fill colors
+  scale_color_manual(values = c("steelblue", "lightcoral", "darkseagreen")) + # Adjust line colors
+  theme_minimal() +
+  theme(
+    legend.title = element_text(size = 12),
+    legend.text = element_text(size = 10),
+    strip.text = element_text(size = 12) # Adjust facet labels size
+  )
+
+```
+
+The type of guardian influences students' academic performance, particularly their final grades (G3). Students under "mother" or "father" guardianship tend to have tightly clustered grade distributions, with peaks in the middle-to-high range, reflecting consistent support. In contrast, students under "other" guardianship show broader distributions, indicating greater variability and potentially less stable academic guidance.
+
+The density plot shows a steady progression of grades from G1 to G3 across all guardian types, with G3 consistently achieving the highest density. While students with "mother" or "father" guardians maintain concentrated peaks, those with "other" guardians experience more dispersed outcomes, suggesting potential challenges in academic consistency.
+
+These trends underscore the role of guardianship in shaping academic success, with parents providing a more stable and supportive environment for students' educational progress.
+
+### **Part 2 Implications**
+
+Family background, including parental education levels, family relationships, and guardianship, significantly influences students' academic performance. Educated parents provide a stable and supportive learning environment, leading to higher and more consistent grades. Positive family relationships further enhance academic success, while poor dynamics increase variability in outcomes. Guardianship types also reflect differing levels of influence, with parents providing more stable academic support compared to other guardians. These findings highlight the importance of a strong familial support system in fostering academic achievement.
+
+## **Part 3: Individual Factors Influencing Academic Performance**
+
+Academic performance is often influenced by various individual factors, including attendance, prior academic challenges, and personal well-being. This section explores two critical aspects: the relationship between absences and grades, particularly in the context of previous failures, and the impact of students' health status on their final grades (`G3`). By analyzing these factors, we aim to uncover patterns that highlight the challenges faced by students and identify opportunities for targeted interventions to support academic success.
+
+### 1. Absences vs final grades by Failures and Gender
+
+This scatterplot visualizes the relationship between **absences** and **final grades (G3)** across different levels of **failures (0-3)**, with points colored by **gender** (red for females, blue for males). The facets represent the number of previous failures, revealing distinct patterns in how absences and gender correlate with academic performance.
+
+```{r}
+library(ggplot2)
+
+ggplot(data, aes(x = absences, y = G3, color = sex)) +
+  geom_point(alpha = 0.7, size = 2) +
+  facet_wrap(~ failures, labeller = labeller(failures = c(
+    "0" = "No Failures",
+    "1" = "1 Failure",
+    "2" = "2 Failures",
+    "3" = "3 Failures",
+    "4" = "4+ Failures"
+  ))) +
+  theme_minimal() +
+  labs(
+    title = "Absences vs Final Grades by Failures and Gender",
+    x = "Absences",
+    y = "Final Grades (G3)",
+    color = "Gender"
+  )
+
+```
+
+Students without past failures display the widest range of grades, primarily clustering between 10 and 15. Absences have a limited effect on this group, as even those with more than 10 absences achieve diverse grade outcomes. This suggests that for students with no history of academic struggles, attendance is not the primary determinant of performance.
+
+For students with one prior failure, grades become more concentrated between 5 and 12, with fewer high achievers compared to those with no failures. Absences play a more significant role in this group, as students with more than 10 absences exhibit a clear decline in performance.
+
+When examining students with two prior failures, the majority of grades fall below 10, with very few achieving scores above this threshold. Absences further exacerbate this trend, with higher absences consistently associated with the lowest grade outcomes.
+
+For students with three prior failures, grade distributions are the most restricted, with nearly all scores falling below 8. Absences amplify this already limited performance, as students with a history of repeated failures struggle to overcome the combined effects of absenteeism and prior academic challenges.
+
+#### Trends:
+
+-   **Absences and Academic Performance**:\
+    The detrimental impact of absences becomes progressively more severe with an increasing number of failures. Early academic struggles amplify the negative effects of poor attendance.
+
+-   **Intervention Priorities**:\
+    While reducing absences is beneficial across all categories, targeted interventions are essential for students with multiple failures, as they are disproportionately affected.
+
+-   **Equity Across Genders**:\
+    Gender does not significantly influence the relationship between absences and grades, reinforcing the need for universal strategies that address attendance and performance for all students.
+
+------------------------------------------------------------------------
+
+### **2. Health Status and Grade Distribution**
+
+This plot visualizes the distribution of final grades (G3) across different levels of health status (`Very Poor` to `Very Good`), with density curves representing gender (`F` for females in blue and `M` for males in red). The faceted layout allows for a comparison of grade distributions across health levels and between genders within each health category.
+
+```{r}
+ggplot(data, aes(x = G3)) +
+  geom_histogram(aes(y = ..density..), binwidth = 1, fill = "skyblue", color = "black", alpha = 0.7) +
+  geom_density(aes(color = sex), size = 1) + 
+  scale_color_manual(values = c("F" = "royalblue", "M" = "red"), name = "Gender") +
+  facet_wrap(~ health, labeller = labeller(health = c(
+    "1" = "Very Poor",
+    "2" = "Poor",
+    "3" = "Average",
+    "4" = "Good",
+    "5" = "Very Good"
+  ))) +
+  theme_minimal() +
+  labs(
+    title = "Distribution of Final Grades (G3) by Health Status",
+    x = "Final Grades (G3)",
+    y = "Density",
+    subtitle = "Faceted by Health Status",
+    color = "Gender"
+  )
+
+```
+
+Students with "Very Good" or "Good" health show the strongest concentration of grades in the upper ranges (15–20), with females consistently achieving slightly higher densities in the top grades compared to males. In contrast, students with "Very Poor" or "Poor" health have flatter distributions, with grades concentrated in the lower ranges (0–10) and a lack of high-performing students. Those with "Average" health status exhibit a more balanced distribution, with grades clustered around 10–15 for both genders.
+
+Overall, health status strongly correlates with academic performance. Better health is associated with improved grades and consistency, while poorer health increases variability and limits achievement, particularly for students already facing academic challenges.
+
+### **Part 3 Implications**
+
+This section highlights two key individual factors affecting academic outcomes: absences and health status.
+
+1.  **Absences**: The compounding effect of absences and past failures underscores the importance of addressing absenteeism early, particularly for students with academic difficulties. Interventions should focus on reducing absences and providing targeted support to improve grades for at-risk students.
+
+2.  **Health Status**: The positive correlation between health and academic performance emphasizes the need for promoting better health habits and providing health-related resources in schools. This could include health awareness programs, mental health support, and wellness initiatives to ensure students maintain the physical and emotional well-being necessary for academic success.
+
+## **Part4. Background Variables and Categorical Analysis**
+
+Understanding the broader context of students' academic performance requires analyzing their background and categorical variables. This section delves into how various types of support systems (family support, school support, and aspirations for higher education) affect G3 grade classification and explores the interdependencies among key categorical variables. Together, these analyses provide insights into the influence of background factors on academic outcomes.
+
+### 1. Impact of Support Types on G3 Classification
+
+This mosaic plot investigates the combined impact of **family support (famsup)**, **school support (schoolsup)**, and **aspirations for higher education (higher)** on students' G3 grade group classifications: High, Medium, and Low.
+
+```{r, fig.width=14, fig.height=14}
+library(vcd)
+
+# Subset your categorical columns
+categorical_data <- data[, c(2, 16:23)]
+
+# Ensure all categorical columns are factors
+categorical_data[] <- lapply(categorical_data, as.factor)
+
+# Create a contingency table
+data_table <- table(categorical_data)
+
+par(cex = 0.1, mar = c(5, 5, 5, 5))  # Adjust text scaling and margins
+#par(cex = 0.8, mar = c(6, 6, 4, 2) + 0.1)  
+# Create a mosaic pairs plot
+pairs(data_table, highlighting = 2, 
+      main = "Mosaic Pairs Plot: Categorical Variables Relationships")
+```
+
+**Higher Education Aspirations**\
+Students who aspire to higher education are significantly more likely to achieve "High" or "Medium" grades, with a substantial reduction in "Low" grades compared to those without such aspirations. This trend persists across various combinations of family and school support, suggesting that aspirations for higher education play a critical role in driving academic performance.
+
+**Support Systems**
+
+-   **Family Support**: Students receiving family support exhibit a slight increase in "Medium" grades but do not show a notable improvement in achieving "High" grades compared to those without family support.
+
+-   **School Support**: The impact of school support is more pronounced, leading to a noticeable reduction in "Low" grades and a corresponding increase in "Medium" and "High" grades. This suggests that school-provided resources or guidance may help mitigate challenges faced by struggling students.
+
+**Combined Effects**\
+The combination of aspirations for higher education with either family or school support results in the most favorable outcomes. Students in this group achieve a higher proportion of "High" grades compared to others. In contrast, those lacking both aspirations and support are disproportionately represented in the "Low" grade category, indicating the compounded negative impact of limited support and motivation.
+
+### **2. Mosaic Pairs Plot**
+
+This mosaic pairs plot illustrates the relationships between categorical variables, including **gender (sex)**, **family support (famsup)**, **school support (schoolsup)**, **aspirations for higher education (higher)**, and others.
+
+```{r, fig.width=16, fig.height=12}
+library(vcd)
+library(dplyr)
+library(forcats)
+library(RColorBrewer)
+
+# 分类 G3 成绩组
+data$G3_group <- case_when(
+  data$G3 >= 15 ~ "High",
+  data$G3 >= 10 ~ "Medium",
+  TRUE ~ "Low"
+)
+data$G3_group <- as.factor(data$G3_group)
+
+# 修改变量名称为更直观的标签
+data <- data %>%
+  mutate(
+    higher = recode(higher, "yes" = "Aspires Higher Education", "no" = "No Aspiration"),
+    famsup = recode(famsup, "yes" = "Family Support", "no" = "No Family Support"),
+    schoolsup = recode(schoolsup, "yes" = "School Support", "no" = "No School Support")
+  )
+
+# 调色板
+palette <- brewer.pal(n = length(levels(data$G3_group)), name = "Set3")
+
+# Mosaic Plot
+vcd::mosaic(G3_group ~ famsup + higher + schoolsup, 
+            data, 
+            direction = c("v", "v", "v", "h"),
+            highlighting_fill = palette,
+            main = "Mosaic Plot of G3 Grade Group by Family Support and Higher Education"
+            )
+
+```
+
+1.  **Gender Distribution**:
+
+    -   There is a higher proportion of female students compared to males.
+
+    -   Gender does not appear to significantly influence other variables like school or family support.
+
+2.  **Support Relationships**:
+
+    -   Students with aspirations for higher education are more likely to have family and school support.
+
+    -   Interestingly, students without family support still show some inclination towards school support, indicating the importance of school intervention in such cases.
+
+3.  **Activity and Support**:
+
+    -   Participation in extracurricular activities (activities = yes) is positively associated with both aspirations for higher education and family support. This suggests a broader support network for students actively engaged in school activities.
+
+4.  **Nursery Attendance and Higher Education**:
+
+    -   A significant proportion of students who attended nursery school also aspire to higher education. This could indicate a link between early education and long-term academic aspirations.
+
+#### **Implications**:
+
+This analysis highlights the intricate relationships between categorical variables and their potential influence on student outcomes. The overlap between support systems, aspirations, and extracurricular involvement emphasizes the need for a holistic approach to improving student performance, particularly through fostering aspirations for higher education and enhancing support systems.
+
+### **Implications and Conclusion of Section 4**
+
+#### **Implications**:
+
+These observations highlight the importance of fostering aspirations for higher education and providing robust support systems, particularly within schools. While family support has a moderate influence, school support appears more impactful in reducing the likelihood of poor academic outcomes. Interventions should focus on enhancing school support mechanisms and encouraging higher education aspirations to improve overall student performance, especially for those at risk of falling into the "Low" grade category.
+
+This analysis highlights the significant role of background factors in shaping student performance. Aspirations for higher education strongly correlate with better academic outcomes, reducing "Low" grades and increasing "High" grades. Both family and school support systems contribute uniquely: **family support** helps improve "Medium" grades, while **school support** plays a critical role in mitigating "Low" grades.
+
+The relationships among categorical variables, such as gender, extracurricular activities, and early education, emphasize the value of holistic support. Students with nursery school experience or active in extracurriculars are more likely to aspire to higher education, reinforcing the importance of early and sustained engagement.
+
+In conclusion, fostering aspirations, strengthening family and school support, and encouraging early and extracurricular involvement can collectively create a foundation for academic success and equitable opportunities.
+
+## Part5. Multivariate Analysis and Comprehensive Patterns
+
+This section presents a comprehensive exploration of multivariate relationships and patterns within the dataset. The **Parallel Coordinate Plot** visualizes normalized values of various academic, behavioral, and contextual variables categorized by school choice reasons. The **PCA Biplot** illustrates the contributions of different variables in separating the final grade (`G3`) groups into Low, Medium, and High categories.
+
+------------------------------------------------------------------------
+
+### 1. Parallel Coordinate Plot - Academic and Behavioral Variables by School Choice Reason
+
+This plot provides a detailed view of academic and behavioral variables for students grouped by their school choice reasons: **course**, **home**, **other**, and **reputation**.
+
+```{r}
+library(GGally)
+library(dplyr)
+library(readr)
+
+# Summarize the data
+summarized_data <- data %>%
+    group_by(reason) %>%
+    summarize(across(where(is.numeric), mean))
+
+# Plot the parallel coordinate plot
+ggparcoord(
+    data = summarized_data,
+    columns = 2:ncol(summarized_data),  
+    groupColumn = 1,                   
+    scale = "globalminmax",
+    alphaLines = 0.5
+) +
+    theme_minimal() +
+    theme(
+        axis.text.x = element_text(angle = 45, hjust = 1), 
+        plot.margin = margin(10, 20, 10, 20)               
+    ) +
+    labs(
+        title = "Academic and Behavioral Variables by School Choice Reason",
+        x = "Variables",
+        y = "Normalized Values"
+    )
+
+```
+
+This parallel coordinate plot highlights group-level differences based on the reason for school choice. The reputation group consistently performs better academically (higher grades in G1, G2, G3) and has higher parental education levels (Medu, Fedu), suggesting a stronger academic focus and support system. In contrast, the other group tends to underperform in grades, indicating potential challenges or differing motivations. Behavioral variables like Dalc (weekday alcohol consumption) and Walc (weekend alcohol consumption) show little variation across groups, while the home group demonstrates slightly better health and lower absences, possibly due to proximity benefits. These patterns suggest a need for tailored support for underperforming groups like other.
+
+#### Commentary
+
+The **reputation** group shows the highest academic performance (G1, G2, G3) and parental education levels (Medu, Fedu). These students also exhibit lower levels of absences and healthier behaviors (e.g., lower alcohol consumption). This group demonstrates a consistent pattern of high achievement and supportive family environments.
+
+The **home** group exhibits moderate grades and relatively good health, aligning with low travel time and absenteeism. This suggests that proximity to school might positively influence both attendance and academic performance.
+
+Students in the **other** group show the lowest grades and higher variability across most variables, such as absenteeism and alcohol consumption. This group's behavior and performance patterns indicate potential external challenges or lack of motivation.
+
+Finally, the **course** group displays moderate performance, with notable variation in study time and health metrics, suggesting a balanced but less focused academic profile compared to the reputation group.
+
+#### Insights
+
+-   **High grades** are strongly associated with the reputation group, likely due to parental education and structured family environments.
+-   **Attendance** (absences and travel time) significantly affects grades, with lower absenteeism linked to better performance.
+-   Behavioral variables (e.g., alcohol consumption) show a negative correlation with academic achievement across all groups.
+
+------------------------------------------------------------------------
+
+### 2. PCA Biplot - Variables and G3 Grade Groups
+
+This PCA Biplot maps students into Low, Medium, and High G3 grade groups while illustrating the influence of academic, behavioral, and contextual variables on grade differentiation.
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(ggfortify)
+library(dplyr)
+
+# Prepare data by removing G1, G2, and G3 and ensure only numeric variables are used
+pca_data <- data[, !(names(data) %in% c("G1", "G2", "G3"))]
+pca_data <- pca_data[sapply(pca_data, is.numeric)]  # Keep only numeric columns
+
+# Perform PCA
+pca_result <- prcomp(pca_data, center = TRUE, scale. = TRUE)
+
+# Add G3 group labels (Low, Medium, High)
+data$G3_group <- factor(ifelse(data$G3 >= 15, "High",
+                               ifelse(data$G3 >= 10, "Medium", "Low")))
+
+# Prepare PCA results for plotting
+pca_plot_data <- data.frame(pca_result$x, G3_group = data$G3_group)
+
+# Aggregate to get one point for each group
+aggregated_data <- pca_plot_data %>%
+  group_by(G3_group) %>%
+  summarize(PC1 = mean(PC1), PC2 = mean(PC2))
+
+# Create the biplot
+ggplot(aggregated_data, aes(x = PC1, y = PC2, color = G3_group)) +
+  geom_point(size = 5, alpha = 0.8) +
+  geom_text(aes(label = G3_group), vjust = -1, size = 4) +
+  geom_segment(data = as.data.frame(pca_result$rotation), 
+               aes(x = 0, y = 0, xend = PC1 * 2, yend = PC2 * 2),
+               arrow = arrow(length = unit(0.2, "cm")), color = "blue") +
+  geom_text(data = as.data.frame(pca_result$rotation), 
+            aes(x = PC1 * 2.2, y = PC2 * 2.2, label = rownames(pca_result$rotation)),
+            color = "blue", size = 4) +
+  labs(title = "Biplot with G3 Grade Groups (Low, Medium, High)",
+       x = "PC 1 (Principal Component 1)", 
+       y = "PC 2 (Principal Component 2)") +
+  theme_minimal()
+
+```
+
+This PCA biplot effectively illustrates the relationships between variables and their influence on distinguishing G3 grade groups (Low, Medium, High). Key variables like studytime, Medu, and Fedu align with higher grades, while failures and age are associated with lower grades. The directions and proximities of arrows reveal correlations among variables, such as Walc and Dalc. The separation of G3 groups along PC1 highlights how these variables differentiate grade performance, making the plot a valuable tool for understanding underlying patterns.
+
+#### Commentary
+
+The first principal component (PC1) separates students primarily based on academic variables like **study time**, **Medu**, and **Fedu**. The **High** G3 group aligns closely with these variables, indicating their strong positive impact on academic performance.
+
+The second principal component (PC2) highlights behavioral variables such as **alcohol consumption (Dalc, Walc)** and **failures**, which are negatively correlated with grades. The **Low** G3 group clusters near these variables, reflecting their detrimental effects on academic success.
+
+Key variables like **health**, **famrel**, and **absences** contribute to grade variability but are more neutral, aligning with the **Medium** G3 group. These variables highlight the balancing factors influencing moderate performance levels.
+
+#### Insights
+
+-   **Parental education (Medu, Fedu)** and **study time** are the strongest predictors of high grades.
+-   Negative behavioral patterns, such as **failures** and **alcohol consumption**, are key indicators of low performance.
+-   Health and family relationships act as stabilizing factors for medium-grade students.
+
+------------------------------------------------------------------------
+
+### Implications and Conclusion
+
+The multivariate analysis underscores the importance of both contextual and behavioral variables in determining academic success. High-performing students benefit from supportive family environments, structured study routines, and positive health behaviors. In contrast, low-performing students are often associated with negative behaviors like alcohol consumption and higher failure rates.
+
+These findings suggest targeted interventions focusing on improving behavioral habits and addressing absenteeism could significantly benefit medium- and low-performing students. Additionally, leveraging parental involvement and structured family support systems could further enhance overall academic outcomes.
+
+```{r, fig.width=16, fig.height=12}
+library(vcd)
+library(dplyr)
+library(forcats)
+library(RColorBrewer)
+
+data$G3_group <- case_when(
+  data$G3 >= 15 ~ "High",
+  data$G3 >= 10 ~ "Medium",
+  TRUE ~ "Low"
+)
+data$G3_group <- as.factor(data$G3_group)
+
+palette <- brewer.pal(n = length(levels(data$G3_group)), name = "Set3")
+
+vcd::mosaic(G3_group ~ famsup + higher + schoolsup, 
+            data, 
+            direction = c("v", "v", "v", "h"),
+            highlighting_fill = palette,
+            main = "Mosaic Plot of G3 Grade Group by Family Support and Higher Education"
+            )
+```
+
+```{r}
+# 加载所需的包
+library(ggplot2)
+
+# 绘制散点图
+ggplot(data, aes(x = absences, y = G3, color = studytime)) +
+  geom_point(alpha = 0.7, size = 3) +  # 添加散点
+  facet_wrap(~ famrel, labeller = labeller(famrel = c(
+    "1" = "Very Poor",
+    "2" = "Poor",
+    "3" = "Average",
+    "4" = "Good",
+    "5" = "Very Good"
+  ))) +  # 按家庭关系分面并设置标签
+  #scale_color_gradient(low = "blue", high = "red") +  # 学习时间的颜色渐变
+  theme_minimal(base_size = 14) +
+  labs(
+    title = "Absences vs Final Grades by Family Relationship",
+    x = "Absences",
+    y = "Final Grades (G3)",
+    color = "Study Time (hours)"
+  )
+
+```
+
+```{r}
+ggplot(data, aes(x = studytime, y = G3, color = higher)) +
+  geom_point(alpha = 0.7, size = 2) +
+  scale_color_manual(values = c("yes" = "darkgreen", "no" = "purple"), name = "Higher Education") +
+  theme_minimal(base_size = 14) +
+  labs(
+    title = "Study Time vs Final Grades by Higher Education Aspiration",
+    x = "Study Time (hours/day)",
+    y = "Final Grades (G3)",
+    color = "Aspiration"
+  )
+
+```
+
+```{r}
+ggplot(data, aes(x = activities, fill = romantic)) +
+  geom_bar(position = "dodge", aes(fill = romantic)) +
+  facet_wrap(~ higher) +  # 按 higher 分面
+  scale_fill_manual(values = c("yes" = "pink", "no" = "blue"), name = "Romantic Relationship") +
+  theme_minimal(base_size = 14) +
+  labs(
+    title = "Extracurricular Activities and Romantic Relationship by Higher Education Aspiration",
+    x = "Participation in Activities",
+    y = "Count",
+    fill = "Romantic"
+  )
+
+```
+
+```{r}
+library(ggmosaic)
+
+ggplot(data) +
+  geom_mosaic(aes(weight = 1, x = product(higher, romantic), fill = activities)) +
+  #scale_fill_manual(name = "Activities") +
+  theme_minimal(base_size = 14) +
+  labs(
+    title = "Higher Education Aspiration with Activities and Romantic Relationship",
+    x = "Higher Education Aspiration and Romantic Relationship",
+    y = "Proportion",
+    fill = "Participation in Activities"
+  )
+
+```
+
+```{r}
+ggplot(data, aes(x = G3)) +
+  geom_histogram(aes(y = ..density..), binwidth = 1, fill = "skyblue", color = "black", alpha = 0.7) +
+  geom_density(color = "red", size = 1) +
+  facet_wrap(~ health, labeller = labeller(health = c(
+    "1" = "Very Poor",
+    "2" = "Poor",
+    "3" = "Average",
+    "4" = "Good",
+    "5" = "Very Good"
+  ))) +
+  theme_minimal(base_size = 14) +
+  labs(
+    title = "Distribution of Final Grades (G3) by Health Status",
+    x = "Final Grades (G3)",
+    y = "Density",
+    subtitle = "Faceted by Health Status"
+  )
+
+```
