@@ -127,7 +127,7 @@ function updatePlot() {
                 .attr("x", width / 2 + margin.left)
                 .attr("y", margin.top)
                 .attr("text-anchor", "middle")
-                .style("font-size", "21px")  // Change font size
+                .style("font-size", "18px")  // Change font size
                 .style("font-family", "Arial, sans-serif")  // Change font style
                 .style("fill", "#483D8B")  // Change text color
                 .style("font-weight", "bold")  // Make it bold
