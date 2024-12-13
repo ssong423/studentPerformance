@@ -8,7 +8,6 @@ Understanding the progression of student performance across different stages is 
 
 The grades in each stage are divided into three categories: **High (≥15)**: Reflecting excellent performance. **Medium (10-14)**: Representing average performance. **Low (\<10)**: Indicating below-average performance.
 
-
 ## **Overall Academic Trends**
 
 The alluvial diagram below illustrates the correlation and flow between students' grades across G1, G2, and G3 stages. Each stratum represents the number of students in each grade category, while the flows indicate transitions between these categories across the stages.
@@ -213,7 +212,6 @@ These trends underscore the role of guardianship in shaping academic success, wi
 
 Family background, including parental education levels, family relationships, and guardianship, significantly influences students' academic performance. Educated parents provide a stable and supportive learning environment, leading to higher and more consistent grades. Positive family relationships further enhance academic success, while poor dynamics increase variability in outcomes. Guardianship types also reflect differing levels of influence, with parents providing more stable academic support compared to other guardians. These findings highlight the importance of a strong familial support system in fostering academic achievement.
 
-
 ## **Individual Factors Influencing Academic Performance**
 
 Academic performance is often influenced by various individual factors, including attendance, prior academic challenges, and personal well-being. This section explores two critical aspects: the relationship between absences and grades, particularly in the context of previous failures, and the impact of students' health status on their final grades (`G3`). By analyzing these factors, we aim to uncover patterns that highlight the challenges faced by students and identify opportunities for targeted interventions to support academic success.
@@ -262,7 +260,6 @@ For students with three prior failures, grade distributions are the most restric
 
 -   **Equity Across Genders**:\
     Gender does not significantly influence the relationship between absences and grades, reinforcing the need for universal strategies that address attendance and performance for all students.
-
 
 ### **Health Status and Grade Distribution**
 
@@ -406,7 +403,6 @@ The relationships among categorical variables, such as gender, extracurricular a
 
 In conclusion, fostering aspirations, strengthening family and school support, and encouraging early and extracurricular involvement can collectively create a foundation for academic success and equitable opportunities.
 
-
 ## **Multivariate Analysis and Comprehensive Patterns**
 
 This section presents a comprehensive exploration of multivariate relationships and patterns within the dataset. The **Parallel Coordinate Plot** visualizes normalized values of various academic, behavioral, and contextual variables categorized by school choice reasons. The **PCA Biplot** illustrates the contributions of different variables in separating the final grade (`G3`) groups into Low, Medium, and High categories.
@@ -453,7 +449,6 @@ This parallel coordinate plot highlights group-level differences based on the re
 -   High grades are strongly associated with the reputation group, likely due to parental education and structured family environments.
 -   Attendance (absences and travel time) significantly affects grades, with lower absenteeism linked to better performance.
 -   Behavioral variables (e.g., alcohol consumption) show a negative correlation with academic achievement across all groups.
-
 
 ### **PCA Biplot - Variables and G3 Grade Groups**
 
