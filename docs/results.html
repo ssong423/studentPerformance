@@ -515,7 +515,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Students without past failures display the widest range of grades, primarily clustering between 10 and 15. Absences have a limited effect on this group, as even those with more than 10 absences achieve diverse grade outcomes. This suggests that for students with no history of academic struggles, attendance is not the primary determinant of performance.</p>
 <p>For students with one prior failure, grades become more concentrated between 5 and 12, with fewer high achievers compared to those with no failures. Absences play a more significant role in this group, as students with more than 10 absences exhibit a clear decline in performance.</p>
 <p>When examining students with two prior failures, the majority of grades fall below 10, with very few achieving scores above this threshold. Absences further exacerbate this trend, with higher absences consistently associated with the lowest grade outcomes.</p>
-<p>For students with three prior failures, grade distributions are the most restricted, with nearly all scores falling below 8. Absences amplify this already limited performance, as students with a history of repeated failures struggle to overcome the combined effects of absenteeism and prior academic challenges.</p>
+<p>For students with three prior failures, grade distributions are the most restricted, with nearly all scores falling below 11. Absences amplify this already limited performance, as students with a history of repeated failures struggle to overcome the combined effects of absenteeism and prior academic challenges.</p>
 <p><strong>Trends:</strong></p>
 <ul>
 <li><p><strong>Absences and Academic Performance</strong>:<br>
@@ -574,7 +574,7 @@ Gender does not significantly influence the relationship between absences and gr
 </section>
 <section id="background-variables-and-categorical-analysis" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="background-variables-and-categorical-analysis"><span class="header-section-number">3.4</span> <strong>Background Variables and Categorical Analysis</strong></h2>
-<p>Understanding the broader context of students’ academic performance requires analyzing their background and categorical variables. This section delves into how various types of support systems (family support, school support, and aspirations for higher education) affect G3 grade classification and explores the interdependencies among key categorical variables. Together, these analyses provide insights into the influence of background factors on academic outcomes.</p>
+<p>Understanding the broader context of students’ academic performance requires analyzing their background and categorical variables. This section delves into how various types of support systems (family support, school support, and aspirations for higher education) affect G3 grade classification and explores the interdependencies among key categorical variables.</p>
 <section id="mosaic-pairs-plot" class="level3" data-number="3.4.1">
 <h3 data-number="3.4.1" class="anchored" data-anchor-id="mosaic-pairs-plot"><span class="header-section-number">3.4.1</span> <strong>Mosaic Pairs Plot</strong></h3>
 <p>This mosaic pairs plot provides a comprehensive overview of the relationships among categorical variables such as gender, support systems, extracurricular activities, and educational aspirations. By visualizing pairwise associations, the plot highlights patterns and potential dependencies between these factors, offering insights into how various support and demographic elements interact within the student population.</p>
@@ -610,7 +610,7 @@ Gender does not significantly influence the relationship between absences and gr
 <li><p><strong>Gender Distribution and Support Systems</strong>:</p>
 <ul>
 <li><p>Female students outnumber male students, as evident from the gender distribution.</p></li>
-<li><p>School and family support (schoolsup and famsup) exhibit slight imbalances, with “no” responses being more common for family support, while school support has a greater proportion of “yes” responses.</p></li>
+<li><p>School and family support (schoolsup and famsup) exhibit slight imbalances, with “yes” responses being more common for family support, while school support has a greater proportion of “no” responses.</p></li>
 </ul></li>
 <li><p><strong>Higher Education Aspirations</strong>:</p>
 <p>A large proportion of students aspire to pursue higher education (higher = yes). This group shows strong overlap with students who have received school and family support, suggesting a possible link between support systems and long-term educational goals.</p></li>
@@ -626,7 +626,6 @@ Gender does not significantly influence the relationship between absences and gr
 </section>
 <section id="impact-of-support-types-on-g3-classification" class="level3" data-number="3.4.2">
 <h3 data-number="3.4.2" class="anchored" data-anchor-id="impact-of-support-types-on-g3-classification"><span class="header-section-number">3.4.2</span> <strong>Impact of Support Types on G3 Classification</strong></h3>
-<p>This mosaic pairs plot illustrates the relationships between categorical variables, including <strong>gender (sex)</strong>, <strong>family support (famsup)</strong>, <strong>school support (schoolsup)</strong>, <strong>aspirations for higher education (higher)</strong>, and others.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -684,7 +683,7 @@ Gender does not significantly influence the relationship between absences and gr
 <p>This section presents a comprehensive exploration of multivariate relationships and patterns within the dataset. The <strong>Parallel Coordinate Plot</strong> visualizes normalized values of various academic, behavioral, and contextual variables categorized by school choice reasons. The <strong>PCA Biplot</strong> illustrates the contributions of different variables in separating the final grade (<code>G3</code>) groups into Low, Medium, and High categories.</p>
 <section id="academic-and-behavioral-variables-by-school-choice-reason" class="level3" data-number="3.5.1">
 <h3 data-number="3.5.1" class="anchored" data-anchor-id="academic-and-behavioral-variables-by-school-choice-reason"><span class="header-section-number">3.5.1</span> <strong>Academic and Behavioral Variables by School Choice Reason</strong></h3>
-<p>This Parallel Coordinate Plot provides a detailed view of academic and behavioral variables for students grouped by their school choice reasons: <strong>course</strong>, <strong>home</strong>, <strong>other</strong>, and <strong>reputation</strong>.</p>
+<p>This Parallel Coordinate Plot provides a detailed view of academic and behavioral variables for students grouped by their school choice reasons: <strong>course</strong>, <strong>home</strong>, <strong>reputation</strong>, and <strong>other</strong>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>

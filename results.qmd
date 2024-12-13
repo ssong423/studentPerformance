@@ -250,7 +250,7 @@ For students with one prior failure, grades become more concentrated between 5 a
 
 When examining students with two prior failures, the majority of grades fall below 10, with very few achieving scores above this threshold. Absences further exacerbate this trend, with higher absences consistently associated with the lowest grade outcomes.
 
-For students with three prior failures, grade distributions are the most restricted, with nearly all scores falling below 8. Absences amplify this already limited performance, as students with a history of repeated failures struggle to overcome the combined effects of absenteeism and prior academic challenges.
+For students with three prior failures, grade distributions are the most restricted, with nearly all scores falling below 11. Absences amplify this already limited performance, as students with a history of repeated failures struggle to overcome the combined effects of absenteeism and prior academic challenges.
 
 **Trends:**
 
@@ -305,7 +305,7 @@ This section highlights two key individual factors affecting academic outcomes: 
 
 ## **Background Variables and Categorical Analysis**
 
-Understanding the broader context of students' academic performance requires analyzing their background and categorical variables. This section delves into how various types of support systems (family support, school support, and aspirations for higher education) affect G3 grade classification and explores the interdependencies among key categorical variables. Together, these analyses provide insights into the influence of background factors on academic outcomes.
+Understanding the broader context of students' academic performance requires analyzing their background and categorical variables. This section delves into how various types of support systems (family support, school support, and aspirations for higher education) affect G3 grade classification and explores the interdependencies among key categorical variables.
 
 ### **Mosaic Pairs Plot**
 
@@ -334,7 +334,7 @@ pairs(data_table, highlighting = 2,
 
     -   Female students outnumber male students, as evident from the gender distribution.
 
-    -   School and family support (schoolsup and famsup) exhibit slight imbalances, with "no" responses being more common for family support, while school support has a greater proportion of "yes" responses.
+    -   School and family support (schoolsup and famsup) exhibit slight imbalances, with "yes" responses being more common for family support, while school support has a greater proportion of "no" responses.
 
 2.  **Higher Education Aspirations**:
 
@@ -357,8 +357,6 @@ pairs(data_table, highlighting = 2,
 This plot underscores the interplay of support systems, aspirations, and other categorical factors in shaping students' educational experiences. The strong connection between higher education aspirations and support—both familial and institutional—highlights the importance of fostering a supportive environment. Additionally, early education (e.g., nursery attendance) and extracurricular activities appear to have long-term positive influences on students' goals and engagement. These insights can inform strategies to better support students in achieving their academic and personal objectives.
 
 ### **Impact of Support Types on G3 Classification**
-
-This mosaic pairs plot illustrates the relationships between categorical variables, including **gender (sex)**, **family support (famsup)**, **school support (schoolsup)**, **aspirations for higher education (higher)**, and others.
 
 ```{r, fig.width=16, fig.height=12, message=FALSE, warning=FALSE}
 library(vcd)
@@ -415,7 +413,7 @@ This section presents a comprehensive exploration of multivariate relationships 
 
 ### **Academic and Behavioral Variables by School Choice Reason**
 
-This Parallel Coordinate Plot provides a detailed view of academic and behavioral variables for students grouped by their school choice reasons: **course**, **home**, **other**, and **reputation**.
+This Parallel Coordinate Plot provides a detailed view of academic and behavioral variables for students grouped by their school choice reasons: **course**, **home**, **reputation**, and **other**.
 
 ```{r, message=FALSE, warning=FALSE}
 library(GGally)
